@@ -1,0 +1,115 @@
+<nav
+  id="navbar"
+  [class]="
+    isMain
+      ? 'navbar navbar-expand-lg fixed-top py-3 d-block'
+      : 'navbar navbar-expand-lg bg-primary fixed-top py-3 d-block'
+  "
+  data-navbar-on-scroll="data-navbar-on-scroll"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#goTop">
+      <img
+        src="https://regalameuncafe.com/images/logo_regalame.png"
+        alt="Regalame un Cafe"
+        height="30"
+        class="d-inline-block align-text-top"
+      />
+    </a>
+
+    <div class="d-sm-block d-md-none">
+      <div class="text-center">
+        <button
+          *ngIf="!isLogged"
+          class="btn btn-outline-light btn-sm ms-1"
+          (click)="login()"
+        >
+          <fa-icon [icon]="faUserCircle"></fa-icon>
+        </button>
+        <div class="dropdown additional-content">
+          <button
+            *ngIf="isLogged"
+            class="btn btn-sm btn-outline-link dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              *ngIf="isLogged"
+              src="..."
+              alt="Profile"
+              class="rounded-circle"
+              width="30"
+              height="30"
+            />
+          </button>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li>
+              <button class="dropdown-item" (click)="logOut()">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-md-block">
+      <a class="btn btn-sm order-1-0 me-1"> Explorar creadores </a>
+      <a class="btn btn-sm order-1-0 me-1"> Comisiones </a>
+
+      <button *ngIf="false" class="btn btn-sm btn-outline-light order-0">
+        Mis Viajes
+      </button>
+      <button
+        *ngIf="!isLogged"
+        class="btn btn-sm btn-outline-dark me-1 order-0"
+        (click)="login()"
+      >
+        Registro
+      </button>
+      <button
+        *ngIf="!isLogged"
+        class="btn btn-sm btn-outline-dark order-0"
+        (click)="login()"
+      >
+        Iniciar Sesión
+      </button>
+      <div class="dropdown additional-content">
+        <button
+          *ngIf="isLogged"
+          class="btn btn-sm btn-outline-link dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            *ngIf="isLogged"
+            src="..."
+            alt="Profile"
+            class="rounded-circle"
+            width="30"
+            height="30"
+          />
+          <span *ngIf="isLogged">
+            {{ user.custName }} {{ user.custSurname }}</span
+          >
+        </button>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li>
+            <button class="dropdown-item" (click)="logOut()">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

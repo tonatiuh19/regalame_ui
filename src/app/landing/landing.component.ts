@@ -56,6 +56,7 @@ export class LandingComponent implements OnInit {
 
   username!: string;
 
+  private ignoreUsernames: string[] = ['gracias', 'anotherUsernameToIgnore'];
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -89,7 +90,7 @@ export class LandingComponent implements OnInit {
 
     this.route.paramMap.subscribe((params) => {
       this.username = params.get('username') ?? '';
-      if (this.username) {
+      if (this.username !== 'gracias') {
         this.store.dispatch(
           LandingActions.getExtrasByUserName({ username: this.username })
         );
@@ -104,6 +105,8 @@ export class LandingComponent implements OnInit {
               this.isCreativePage = false;
             }
           });
+      } else {
+        this.router.navigate(['gracias']);
       }
     });
   }

@@ -24,6 +24,18 @@ export const initialLandingState: LandingState = {
     user_name: '',
     extras: [],
   },
+  paymentSuccess: {
+    paymentSuccess: false,
+  },
+  payment: {
+    id_payments: 0,
+    id_user: 0,
+    id_extra: 0,
+    date: new Date(),
+    question_answer: '',
+    note_fan: '',
+    isPublic_note_fan: 0,
+  },
   isLoading: false,
   isError: false,
   isUserinModalSign: false,

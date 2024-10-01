@@ -143,5 +143,50 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
-  )
+  ),
+  on(LandingActions.paying, (state: LandingState, { paymentData }: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.payingSuccess,
+    (state: LandingState, { paymentResponse }: any) => {
+      return {
+        ...state,
+        paymentSuccess: paymentResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.payingFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(LandingActions.cleanPayment, (state: LandingState) => {
+    return {
+      ...state,
+      paymentSuccess: {
+        paymentSuccess: false,
+      },
+      payment: {
+        id_payments: 0,
+        id_user: 0,
+        id_extra: 0,
+        date: new Date(),
+        question_answer: '',
+        note_fan: '',
+        isPublic_note_fan: 0,
+      },
+    };
+  })
 );

@@ -142,6 +142,38 @@ export class LandingEffects {
     );
   });
 
+  paying$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.paying),
+      switchMap(({ paymentData }) => {
+        return this.creativeService
+          .payingPackage(
+            paymentData.id_user,
+            paymentData.id_extra,
+            paymentData.email_user,
+            paymentData.amount,
+            paymentData.description,
+            paymentData.question_answer,
+            paymentData.payment_name,
+            paymentData.note_fan,
+            paymentData.isPublic_note_fan,
+            paymentData.user_name,
+            paymentData.token
+          )
+          .pipe(
+            map((response) => {
+              return LandingActions.payingSuccess({
+                paymentResponse: response,
+              });
+            }),
+            catchError((error) => {
+              return of(LandingActions.payingFailure({ errorResponse: error }));
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

@@ -2,6 +2,8 @@ export interface LandingState {
   checkingUser?: InstantUserInfoModel;
   user?: UserModel;
   extras?: ExtrasModel;
+  payment?: PaymentModel;
+  paymentSuccess?: PaymentSuccessModel;
   isUserinModalSign?: boolean;
   isLoading?: boolean;
   isError?: boolean;
@@ -55,4 +57,9 @@ export interface PaymentModel {
   question_answer: string;
   note_fan: string;
   isPublic_note_fan: number;
+  token?: string;
+}
+
+export interface PaymentSuccessModel {
+  paymentSuccess: boolean;
 }

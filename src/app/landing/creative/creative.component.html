@@ -55,12 +55,13 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
-        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="checkoutForm" (ngSubmit)="handlePayment()">
           <div class="row">
             <div class="col-sm-12 text-center">
               <h3 class="custom-heading">
                 {{ extras.user_name }}
                 <span
+                  #closeButtonModal
                   type="button"
                   class="close-button float-end"
                   data-bs-dismiss="modal"
@@ -77,7 +78,7 @@
                   placeholder="Tu correo electrónico"
                   formControlName="email"
                   [ngClass]="{
-                    'is-invalid': checkoutForm.get('email')?.touched,
+                    'is-invalid': checkoutForm.get('email')?.invalid,
                     'is-valid': checkoutForm.get('email')?.valid
                   }"
                 />
@@ -92,7 +93,7 @@
                   placeholder="Escribe tu nombre completo"
                   formControlName="fullName"
                   [ngClass]="{
-                    'is-invalid': checkoutForm.get('fullName')?.touched,
+                    'is-invalid': checkoutForm.get('fullName')?.invalid,
                     'is-valid': checkoutForm.get('fullName')?.valid
                   }"
                 />
@@ -169,19 +170,17 @@
                     data-bs-parent="#accordionFlushExample"
                   >
                     <div class="card-body">
-                      <div class="col-12 mb-1">
-                        <span
-                          class="card-errors btn btn-sm btn-danger"
-                          id="card-errors"
-                          role="alert"
-                        ></span>
+                      <div class="col-12 mb-1" *ngIf="isStripeError">
+                        <span class="badge text-bg-danger">
+                          {{ stripeErrorMessage }}
+                        </span>
                       </div>
-                      <div
-                        class="col-12 payment-general-form"
-                        id="card-element"
-                      ></div>
+                      <div class="col-12">
+                        <div id="card-element" class="form-control mt-2"></div>
+                      </div>
                       <div class="col-12 mt-3">
                         <button
+                          *ngIf="!isLoadingCheckout"
                           id="pay-button"
                           name="stripe_button"
                           value="stripeBtn"
@@ -191,6 +190,7 @@
                           <fa-icon [icon]="faLock"></fa-icon> Pagar
                         </button>
                         <button
+                          *ngIf="isLoadingCheckout"
                           id="pagando"
                           class="btn btn-success w-100"
                           disabled

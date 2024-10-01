@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './landing/landing.component';
-import { LandingRoutes } from './landing/landing.routes';
+import { ThankYouComponent } from './landing/thank-you/thank-you.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
+  { path: 'gracias', component: ThankYouComponent },
   { path: ':username', component: LandingComponent },
 ];
 

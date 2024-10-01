@@ -19,3 +19,13 @@ export const selectExtras = createSelector(
   selectLandingState,
   (state: LandingState) => state.extras
 );
+
+export const selectPayment = createSelector(
+  selectLandingState,
+  (state: LandingState) => state.payment
+);
+
+export const selectPaymentSuccess = createSelector(
+  selectLandingState,
+  (state: LandingState) => state.paymentSuccess
+);

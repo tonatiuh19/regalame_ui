@@ -1,302 +1,284 @@
-<app-header></app-header>
-<section
-  class="d-flex justify-content-center align-items-center main-container"
-  id="goTop"
->
-  <div class="container">
-    <div class="row text-center">
-      <div
-        class="col-md-7 col-sm-12 d-flex justify-content-center align-items-center"
-      >
-        <div class="row text-start">
-          <div class="col-sm-12" id="target-element">
-            <h2>
-              Forma sencilla y significativa de financiar tu
-              <span id="quote" class="typing-effect"></span>
-            </h2>
+<app-loading-mask *ngIf="isloading$ | async"></app-loading-mask>
+<app-creative *ngIf="isCreativePage" [extras]="creativeExtra"></app-creative>
+<app-header [isMain]="!isCreativePage"></app-header>
+<ng-container *ngIf="!isCreativePage">
+  <section
+    class="d-flex justify-content-center align-items-center main-container pt-5"
+    id="goTop"
+  >
+    <div class="container">
+      <div class="row text-center">
+        <div
+          class="col-md-7 col-sm-12 d-flex justify-content-center align-items-center"
+        >
+          <div class="row text-start">
+            <div class="col-sm-12" id="target-element">
+              <h2>
+                Forma sencilla y significativa de financiar tu
+                <span id="quote" class="typing-effect"></span>
+              </h2>
+            </div>
+            <div class="col-sm-12 mt-2">
+              <h6>
+                <small class="text-muted"
+                  >Recibe algo extra. Obtén un beneficio adicional.</small
+                >
+              </h6>
+            </div>
+            <div class="col-sm-12 mt-5">
+              <app-user-name-searcher
+                (buttonClicked)="handleButtonClick()"
+              ></app-user-name-searcher>
+            </div>
           </div>
-          <div class="col-sm-12 mt-2">
-            <h6>
-              <small class="text-muted"
-                >Recibe algo extra. Obtén un beneficio adicional.</small
-              >
-            </h6>
+        </div>
+        <div class="col-md-5 d-none d-md-block">
+          <img
+            src="https://regalameuncafe.com/images/creator.png"
+            alt="Landing Image"
+            class="img-fluid levitate"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-dark text-white p-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-sm-12 mt-5">
+          <span class="bump-effect">
+            <fa-icon [icon]="faHeart" size="3x"></fa-icon>
+          </span>
+        </div>
+        <div class="col-sm-12">
+          <h2 class="text-center mt-2 strong-text">
+            Dale a tu audiencia una forma fácil de agradecer
+          </h2>
+        </div>
+        <div class="col-sm-12 mb-5 mt-2">
+          <span>
+            Con solo un par de clicks, tus seguidores pueden apoyar tu
+            creatividad, mas aparte dejar un mensaje.
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="p-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-sm-6 mb-5 mt-3">
+          <div class="row">
+            <div class="col-sm-12">
+              <fa-icon [icon]="faGift" size="3x"></fa-icon>
+            </div>
+            <div class="col-sm-12">
+              <h3>Consciente a los tuyos</h3>
+            </div>
+            <div class="col-sm-12">
+              <span>
+                Consentir a los tuyos no se trata solo de regalos caros o
+                extravagantes, sino de demostrarles que realmente te importan
+              </span>
+            </div>
           </div>
-          <div class="col-sm-12 mt-5">
-            <div class="input-group mb-3">
-              <span class="input-group-text ps-3 py-3 creative-main-start-span"
-                >regalameuncafe.com/</span
-              >
-              <input
-                type="text"
-                class="form-control creative-main-input"
-                placeholder="tunombre"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
-              <span class="input-group-text creative-main-end-span">
-                <button class="btn btn-danger creative-main-button">
-                  Crear
-                </button>
+        </div>
+        <div class="col-sm-6 mb-5 mt-3">
+          <div class="row">
+            <div class="col-sm-12">
+              <fa-icon [icon]="faCommentDots" size="3x"></fa-icon>
+            </div>
+            <div class="col-sm-12">
+              <h3>Servicio insuperable</h3>
+            </div>
+            <div class="col-sm-12">
+              <span>
+                Siempre puedes hablar con un humano para que te ayude, o si solo
+                necesitas un consejo para comenzar a toda velocidad.
               </span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-5 d-none d-md-block">
-        <img
-          src="https://regalameuncafe.com/images/creator.png"
-          alt="Landing Image"
-          class="img-fluid levitate"
-        />
-      </div>
     </div>
-  </div>
-</section>
-<section class="bg-dark text-white p-5">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-sm-12 mt-5">
-        <span class="bump-effect">
-          <fa-icon [icon]="faHeart" size="3x"></fa-icon>
-        </span>
-      </div>
-      <div class="col-sm-12">
-        <h2 class="text-center mt-2 strong-text">
-          Dale a tu audiencia una forma fácil de agradecer
-        </h2>
-      </div>
-      <div class="col-sm-12 mb-5 mt-2">
-        <span>
-          Con solo un par de clicks, tus seguidores pueden apoyar tu
-          creatividad, mas aparte dejar un mensaje.
-        </span>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="p-5">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-sm-6 mb-5 mt-3">
-        <div class="row">
-          <div class="col-sm-12">
-            <fa-icon [icon]="faGift" size="3x"></fa-icon>
-          </div>
-          <div class="col-sm-12">
-            <h3>Consciente a los tuyos</h3>
-          </div>
-          <div class="col-sm-12">
-            <span>
-              Consentir a los tuyos no se trata solo de regalos caros o
-              extravagantes, sino de demostrarles que realmente te importan
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 mb-5 mt-3">
-        <div class="row">
-          <div class="col-sm-12">
-            <fa-icon [icon]="faCommentDots" size="3x"></fa-icon>
-          </div>
-          <div class="col-sm-12">
-            <h3>Servicio insuperable</h3>
-          </div>
-          <div class="col-sm-12">
-            <span>
-              Siempre puedes hablar con un humano para que te ayude, o si solo
-              necesitas un consejo para comenzar a toda velocidad.
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="p-5">
-  <div class="container">
-    <div class="row text-center">
-      <div
-        class="col-sm-6 mb-5 mt-3 d-flex justify-content-center align-items-center"
-      >
-        <div class="row">
-          <div class="col-sm-12">
-            <h3>Consciente a los tuyos</h3>
-          </div>
-          <div class="col-sm-12">
-            <span>
-              Consentir a los tuyos no se trata solo de regalos caros o
-              extravagantes, sino de demostrarles que realmente te importan
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 mb-5 mt-3">
-        <div class="row text-start">
-          <div class="col-sm-12">
-            <h3>Incluye tu link en todas partes:</h3>
-          </div>
-          <div class="col-sm-12">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <fa-icon [icon]="faArrowRight"></fa-icon> Simple
-              </li>
-              <li class="list-group-item">
-                <fa-icon [icon]="faArrowRight"></fa-icon> Rapido
-              </li>
-              <li class="list-group-item">
-                <fa-icon [icon]="faArrowRight"></fa-icon> Ergonomico UI/UX
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="bg-dark text-white p-5">
-  <div class="container-fluid">
-    <div class="row text-center">
-      <div class="col-sm-12">
-        <h2 class="text-center mt-5 strong-text">
-          Donde mas lo necesites y cuando mas lo necesites
-        </h2>
-      </div>
-      <div class="col-sm-12 mb-5 mt-3">
-        <div class="svg-carousel">
-          <div class="svg-track">
-            <div
-              *ngFor="let icon of icons"
-              [innerHTML]="icon"
-              class="svg-icon"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="p-5">
-  <div class="container-fliud">
-    <div class="row text-center">
-      <div class="col-sm-12 mb-5 mt-3">
-        <div class="row">
-          <div class="col-sm-12">
-            <h3 class="mb-3">Explora creadores</h3>
-          </div>
-          <div class="col-sm-12">
-            <div class="input-group mb-3">
-              <span
-                class="input-group-text ps-3 py-3 creative-main-start-span d-none d-md-inline"
-              >
-                regalameuncafe.com/</span
-              >
-              <input
-                type="text"
-                class="form-control creative-main-input"
-                placeholder="escribe el nombre"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
-              <span class="input-group-text creative-main-end-span">
-                <button class="btn btn-danger creative-main-button">
-                  <fa-icon [icon]="faSerach"></fa-icon>
-                </button>
+  </section>
+  <section class="p-5">
+    <div class="container">
+      <div class="row text-center">
+        <div
+          class="col-sm-6 mb-5 mt-3 d-flex justify-content-center align-items-center"
+        >
+          <div class="row">
+            <div class="col-sm-12">
+              <h3>Consciente a los tuyos</h3>
+            </div>
+            <div class="col-sm-12">
+              <span>
+                Consentir a los tuyos no se trata solo de regalos caros o
+                extravagantes, sino de demostrarles que realmente te importan
               </span>
             </div>
           </div>
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-sm-4">
-                <div class="card bg-card text-dark h-100">
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row align-items-center h-100">
-                        <div class="col-sm-3 mx-auto">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 512 512"
-                          >
-                            <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                              d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
-                            />
-                          </svg>
-                        </div>
-                        <div class="col-sm-9 mx-auto">
-                          <h5 class="card-title fw-bolder">
-                            Nombre del creador
-                          </h5>
-                          <a href="" target="_blank" class="btn btn-danger"
-                            >Apoyar</a
-                          >
+        </div>
+        <div class="col-sm-6 mb-5 mt-3">
+          <div class="row text-start">
+            <div class="col-sm-12">
+              <h3>Incluye tu link en todas partes:</h3>
+            </div>
+            <div class="col-sm-12">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <fa-icon [icon]="faArrowRight"></fa-icon> Simple
+                </li>
+                <li class="list-group-item">
+                  <fa-icon [icon]="faArrowRight"></fa-icon> Rapido
+                </li>
+                <li class="list-group-item">
+                  <fa-icon [icon]="faArrowRight"></fa-icon> Ergonomico UI/UX
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-dark text-white p-5">
+    <div class="container-fluid">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <h2 class="text-center mt-5 strong-text">
+            Donde mas lo necesites y cuando mas lo necesites
+          </h2>
+        </div>
+        <div class="col-sm-12 mb-5 mt-3">
+          <app-infinite-svg-carousel></app-infinite-svg-carousel>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="p-5">
+    <div class="container-fliud">
+      <div class="row text-center">
+        <div class="col-sm-12 mb-5 mt-3">
+          <div class="row">
+            <div class="col-sm-12">
+              <h3 class="mb-3">Explora creadores</h3>
+            </div>
+            <div class="col-sm-12">
+              <div class="input-group mb-3">
+                <span
+                  class="input-group-text ps-3 py-3 creative-main-start-span d-none d-md-inline"
+                >
+                  regalameuncafe.com/</span
+                >
+                <input
+                  type="text"
+                  class="form-control creative-main-input"
+                  placeholder="escribe el nombre"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                />
+                <span class="input-group-text creative-main-end-span">
+                  <button class="btn btn-danger creative-main-button">
+                    <fa-icon [icon]="faSerach"></fa-icon>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="card bg-card text-dark h-100">
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row align-items-center h-100">
+                          <div class="col-sm-3 mx-auto">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                            >
+                              <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path
+                                d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
+                              />
+                            </svg>
+                          </div>
+                          <div class="col-sm-9 mx-auto">
+                            <h5 class="card-title fw-bolder">
+                              Nombre del creador
+                            </h5>
+                            <a href="" target="_blank" class="btn btn-danger"
+                              >Apoyar</a
+                            >
+                          </div>
                         </div>
                       </div>
+                      <p class="card-text mt-3"></p>
+                      <div></div>
                     </div>
-                    <p class="card-text mt-3"></p>
-                    <div></div>
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card bg-card text-dark h-100 m-1">
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row align-items-center h-100">
-                        <div class="col-sm-3 mx-auto">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 512 512"
-                          >
-                            <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                              d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
-                            />
-                          </svg>
-                        </div>
-                        <div class="col-sm-9 mx-auto">
-                          <h5 class="card-title fw-bolder">
-                            Nombre del creador
-                          </h5>
-                          <a href="" target="_blank" class="btn btn-danger"
-                            >Apoyar</a
-                          >
+                <div class="col-sm-4">
+                  <div class="card bg-card text-dark h-100 m-1">
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row align-items-center h-100">
+                          <div class="col-sm-3 mx-auto">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                            >
+                              <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path
+                                d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
+                              />
+                            </svg>
+                          </div>
+                          <div class="col-sm-9 mx-auto">
+                            <h5 class="card-title fw-bolder">
+                              Nombre del creador
+                            </h5>
+                            <a href="" target="_blank" class="btn btn-danger"
+                              >Apoyar</a
+                            >
+                          </div>
                         </div>
                       </div>
+                      <p class="card-text mt-3"></p>
+                      <div></div>
                     </div>
-                    <p class="card-text mt-3"></p>
-                    <div></div>
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card bg-card text-dark h-100">
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row align-items-center h-100">
-                        <div class="col-sm-3 mx-auto">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 512 512"
-                          >
-                            <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                              d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
-                            />
-                          </svg>
-                        </div>
-                        <div class="col-sm-9 mx-auto">
-                          <h5 class="card-title fw-bolder">
-                            Nombre del creador
-                          </h5>
-                          <a href="" target="_blank" class="btn btn-danger"
-                            >Apoyar</a
-                          >
+                <div class="col-sm-4">
+                  <div class="card bg-card text-dark h-100">
+                    <div class="card-body">
+                      <div class="container">
+                        <div class="row align-items-center h-100">
+                          <div class="col-sm-3 mx-auto">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                            >
+                              <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path
+                                d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
+                              />
+                            </svg>
+                          </div>
+                          <div class="col-sm-9 mx-auto">
+                            <h5 class="card-title fw-bolder">
+                              Nombre del creador
+                            </h5>
+                            <a href="" target="_blank" class="btn btn-danger"
+                              >Apoyar</a
+                            >
+                          </div>
                         </div>
                       </div>
+                      <p class="card-text mt-3"></p>
+                      <div></div>
                     </div>
-                    <p class="card-text mt-3"></p>
-                    <div></div>
                   </div>
                 </div>
               </div>
@@ -305,21 +287,22 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-<section class="bg-dark text-white p-5">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-sm-12">
-        <h2 class="text-center mt-5 strong-text">Eleva tus ingresos</h2>
-      </div>
-      <div class="col-sm-12 mb-5 mt-3">
-        <span> De creadores para creadores </span>
+  </section>
+  <section class="bg-dark text-white p-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <h2 class="text-center mt-5 strong-text">Eleva tus ingresos</h2>
+        </div>
+        <div class="col-sm-12 mb-5 mt-3">
+          <span> De creadores para creadores </span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<section>
-  <img class="imgFullWidth banner" />
-</section>
+  </section>
+  <section>
+    <img class="imgFullWidth banner" />
+  </section>
+</ng-container>
 <app-footer></app-footer>
+<app-modal-sign #modal></app-modal-sign>

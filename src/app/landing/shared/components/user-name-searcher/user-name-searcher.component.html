@@ -1,0 +1,40 @@
+<div class="input-group mb-1">
+  <span class="input-group-text ps-3 py-3 creative-main-start-span"
+    >regalameuncafe.com/</span
+  >
+  <input
+    type="text"
+    class="form-control creative-main-input"
+    placeholder="tunombre"
+    aria-label="Username"
+    aria-describedby="basic-addon1"
+    (keyup)="onKeyup($event)"
+  />
+  <span class="input-group-text creative-main-end-span">
+    <button
+      *ngIf="isMain"
+      class="btn btn-danger creative-main-button"
+      [disabled]="isSubmitButtonDisabled || !userNameInput.length"
+      (click)="onButtonClick()"
+    >
+      <ng-container *ngIf="!isLoading">{{ buttonText }}</ng-container>
+      <ng-container *ngIf="isLoading"
+        ><app-loading-sm></app-loading-sm
+      ></ng-container>
+    </button>
+    <button
+      *ngIf="!isMain"
+      class="btn btn-danger creative-main-button"
+      [disabled]="!isSubmitButtonDisabled || !userNameInput.length"
+      (click)="onButtonClick()"
+    >
+      <ng-container *ngIf="!isLoading">{{ buttonText }}</ng-container>
+      <ng-container *ngIf="isLoading"
+        ><app-loading-sm></app-loading-sm
+      ></ng-container>
+    </button>
+  </span>
+</div>
+<span class="badge text-bg-danger ms-1" *ngIf="isUserNameExist && isMain">
+  Este nombre de usuario ya está en uso
+</span>

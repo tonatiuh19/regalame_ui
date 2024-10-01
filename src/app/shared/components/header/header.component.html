@@ -3,7 +3,7 @@
   [class]="
     isMain
       ? 'navbar navbar-expand-lg fixed-top py-3 d-block'
-      : 'navbar navbar-expand-lg bg-primary fixed-top py-3 d-block'
+      : 'navbar navbar-expand-lg bg-white fixed-top py-3 d-block'
   "
   data-navbar-on-scroll="data-navbar-on-scroll"
 >
@@ -21,7 +21,7 @@
       <div class="text-center">
         <button
           *ngIf="!isLogged"
-          class="btn btn-outline-light btn-sm ms-1"
+          class="btn btn-outline-dark btn-sm ms-1"
           (click)="login()"
         >
           <fa-icon [icon]="faUserCircle"></fa-icon>
@@ -29,7 +29,7 @@
         <div class="dropdown additional-content">
           <button
             *ngIf="isLogged"
-            class="btn btn-sm btn-outline-link dropdown-toggle"
+            class="btn btn-sm btn-outline-dark dropdown-toggle"
             type="button"
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"
@@ -37,7 +37,7 @@
           >
             <img
               *ngIf="isLogged"
-              src="..."
+              [src]="user.picture"
               alt="Profile"
               class="rounded-circle"
               width="30"
@@ -60,28 +60,17 @@
     <div class="d-none d-md-block">
       <a class="btn btn-sm order-1-0 me-1"> Explorar creadores </a>
       <a class="btn btn-sm order-1-0 me-1"> Comisiones </a>
-
-      <button *ngIf="false" class="btn btn-sm btn-outline-light order-0">
-        Mis Viajes
-      </button>
       <button
         *ngIf="!isLogged"
         class="btn btn-sm btn-outline-dark me-1 order-0"
         (click)="login()"
       >
-        Registro
-      </button>
-      <button
-        *ngIf="!isLogged"
-        class="btn btn-sm btn-outline-dark order-0"
-        (click)="login()"
-      >
-        Iniciar Sesión
+        Registro / Iniciar Sesión
       </button>
       <div class="dropdown additional-content">
         <button
           *ngIf="isLogged"
-          class="btn btn-sm btn-outline-link dropdown-toggle"
+          class="btn btn-sm btn-outline-dark dropdown-toggle"
           type="button"
           id="dropdownMenuButton"
           data-bs-toggle="dropdown"
@@ -89,15 +78,13 @@
         >
           <img
             *ngIf="isLogged"
-            src="..."
+            [src]="user.picture"
             alt="Profile"
             class="rounded-circle"
             width="30"
             height="30"
           />
-          <span *ngIf="isLogged">
-            {{ user.custName }} {{ user.custSurname }}</span
-          >
+          <span *ngIf="isLogged"> {{ user.name }} {{ user.last_name }}</span>
         </button>
         <ul
           class="dropdown-menu dropdown-menu-end"
@@ -113,3 +100,4 @@
     </div>
   </div>
 </nav>
+<app-modal-sign #modal></app-modal-sign>

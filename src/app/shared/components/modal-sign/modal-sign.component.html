@@ -1,0 +1,28 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  [ngClass]="{ show: isVisible }"
+  [ngStyle]="{ display: isVisible ? 'block' : 'none' }"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div *ngIf="isSignIn">
+          <h5>
+            Ingresa tu nombre de usuario:
+            <span class="text-dark pointer float-end mb-4" (click)="close()">
+              <fa-icon [icon]="faCircleXmark"></fa-icon>
+            </span>
+          </h5>
+          <app-user-name-searcher
+            (buttonClicked)="handleButtonClick()"
+          ></app-user-name-searcher>
+        </div>
+        <div *ngIf="!isSignIn">
+          <p>Step 2 content goes here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

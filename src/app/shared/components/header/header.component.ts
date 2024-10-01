@@ -1,6 +1,18 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import { fromLanding } from '../../../landing/shared/store/selectors';
+import { LandingActions } from '../../../landing/shared/store/actions';
+import { AuthService } from '@auth0/auth0-angular';
+import { ModalSignComponent } from '../modal-sign/modal-sign.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,27 +20,74 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('modal') modal!: ModalSignComponent;
   @Input() isMain = true;
+
+  public selectUser$ = this.store.select(fromLanding.selectUser);
+
   public isLogged = false;
 
   public user: any = {};
+  public isNotUserName = false;
 
   faUserCircle = faUserCircle;
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor() {}
+  constructor(
+    private store: Store,
+    public auth: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
+      this.user = user;
+      this.isLogged = !!(user && this.user.id_user !== 0);
+      if (this.user.user_name === '') {
+        this.isNotUserName = true;
+      }
+    });
+
+    this.auth.user$.subscribe((profile) => {
+      if (profile) {
+        this.store.dispatch(
+          LandingActions.authenticateUser({
+            user: {
+              ...profile,
+            },
+          })
+        );
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // The modal reference is now available
+    if (this.isNotUserName && this.isLogged) {
+      this.modal.open();
+    } else {
+      this.modal.close();
+    }
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  login(): void {}
+  login(): void {
+    const urlSegment = this.router.url.split('/').slice(1).join('/');
+    this.auth.loginWithRedirect({
+      appState: { target: urlSegment },
+    });
+  }
 
-  logOut(): void {}
+  logOut(): void {
+    this.isLogged = false;
+    this.store.dispatch(LandingActions.logoutUser());
+    this.auth.logout();
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

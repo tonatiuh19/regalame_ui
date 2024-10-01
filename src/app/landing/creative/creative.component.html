@@ -1,0 +1,228 @@
+<section
+  class="d-flex justify-content-center align-items-center main-container pt-5 bg-white"
+>
+  <div class="card w-100 card-container no-padding-mobile">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6 text-center">
+          <div class="row">
+            <div class="col-sm-12">
+              <img [src]="mainExtra.picture" class="img-thumbnail custom-img" />
+            </div>
+            <div class="col-sm-12 mt-4">
+              <h1 class="custom-heading">{{ extras.user_name }}</h1>
+            </div>
+            <div class="col-sm-12">
+              <span class="border-span bg-dark text-white">
+                {{ getProcessedText(mainExtra.about) }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row h-100">
+            <div class="col-sm-12 text-center parent-coffees-card-container">
+              <app-coffees-card
+                [basePrice]="mainExtra.price"
+                (priceChange)="priceChange($event)"
+              ></app-coffees-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<button
+  #checkoutButton
+  type="button"
+  class="btn btn-primary hidden-button-check-out"
+  data-bs-toggle="modal"
+  data-bs-target="#exampleModal"
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <h3 class="custom-heading">
+                {{ extras.user_name }}
+                <span
+                  type="button"
+                  class="close-button float-end"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  >x</span
+                >
+              </h3>
+            </div>
+            <div class="col-sm-12">
+              <div class="mb-3">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Tu correo electrónico"
+                  formControlName="email"
+                  [ngClass]="{
+                    'is-invalid': checkoutForm.get('email')?.touched,
+                    'is-valid': checkoutForm.get('email')?.valid
+                  }"
+                />
+                <div id="emailHelp" class="form-text">
+                  Aquí te llegara tu confirmación de pago y un mensaje especial.
+                </div>
+              </div>
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Escribe tu nombre completo"
+                  formControlName="fullName"
+                  [ngClass]="{
+                    'is-invalid': checkoutForm.get('fullName')?.touched,
+                    'is-valid': checkoutForm.get('fullName')?.valid
+                  }"
+                />
+              </div>
+              <div class="mb-3">
+                <div class="border-text-area">
+                  <textarea
+                    class="form-control no-border-text-area"
+                    placeholder="Aquí puedes escribir algo publico o privado (opcional)"
+                    rows="3"
+                    formControlName="message"
+                  ></textarea>
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      formControlName="isPublic"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckChecked"
+                      >Mensaje publico</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 text-center py-3">
+              <h3>{{ pricing | currency }}</h3>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  formControlName="acceptTerms"
+                />
+                <label
+                  class="form-check-label small-colored-label"
+                  for="flexCheckChecked"
+                >
+                  Acepto los términos y condiciones de uso y politicas de
+                  privacidad
+                </label>
+                <div
+                  *ngIf="
+                    checkoutForm.get('acceptTerms')?.invalid &&
+                    checkoutForm.get('acceptTerms')?.touched
+                  "
+                  class="form-text text-danger"
+                >
+                  Debes aceptar los términos y condiciones.
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item mb-1">
+                  <button
+                    class="btn btn-secondary w-100 collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    <app-payment-types-inline></app-payment-types-inline>
+                  </button>
+                  <div
+                    id="flush-collapseOne"
+                    class="collapse card my-4"
+                    aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample"
+                  >
+                    <div class="card-body">
+                      <div class="col-12 mb-1">
+                        <span
+                          class="card-errors btn btn-sm btn-danger"
+                          id="card-errors"
+                          role="alert"
+                        ></span>
+                      </div>
+                      <div
+                        class="col-12 payment-general-form"
+                        id="card-element"
+                      ></div>
+                      <div class="col-12 mt-3">
+                        <button
+                          id="pay-button"
+                          name="stripe_button"
+                          value="stripeBtn"
+                          type="submit"
+                          class="btn btn-success w-100"
+                        >
+                          <fa-icon [icon]="faLock"></fa-icon> Pagar
+                        </button>
+                        <button
+                          id="pagando"
+                          class="btn btn-success w-100"
+                          disabled
+                        >
+                          <fa-icon
+                            [icon]="faCircleNotch"
+                            class="spin"
+                          ></fa-icon>
+                          Procesando
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="">
+                  <button
+                    id="payPal"
+                    name="paypal_button"
+                    value="paypalBtn"
+                    type="submit"
+                    class="btn btn-warning w-100"
+                  >
+                    <app-payment-types-inline
+                      [isPaypal]="true"
+                    ></app-payment-types-inline>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

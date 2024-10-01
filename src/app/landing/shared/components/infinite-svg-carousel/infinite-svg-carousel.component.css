@@ -1,0 +1,29 @@
+.svg-carousel {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.svg-track {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.svg-icon {
+  flex: 0 0 auto;
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+  fill: currentColor; /* Ensures the SVG uses the current text color */
+  margin: 0 10px; /* Adjust the margin as needed */
+  color: rgb(255, 255, 255); /* Change the color as needed */
+}

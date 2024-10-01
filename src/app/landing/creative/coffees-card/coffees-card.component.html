@@ -1,0 +1,75 @@
+<div class="card bg-dark text-white w-100 top-space-mobile">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <h5>Invítame un cafe, dos o tres</h5>
+      </div>
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-3 center-container">
+            <img
+              src="https://garbrix.com/regalame/assets/images/icon.png"
+              alt="Regalame un Cafe"
+              height="50"
+              class="d-inline-block align-text-top ps-3"
+            />
+            <span class="ps-3"> x </span>
+          </div>
+          <div class="col-2">
+            <button
+              class="btn btn-light custom-button"
+              [ngClass]="{
+                pressed: selectedButton === 0,
+                'last-button': 0 === buttons.length - 1
+              }"
+              (click)="selectButton(0)"
+            >
+              <strong>{{ 1 }}</strong>
+            </button>
+          </div>
+          <div class="col-2 hide-on-mobile">
+            <button
+              class="btn btn-light custom-button"
+              [ngClass]="{
+                pressed: selectedButton === 1,
+                'last-button': 1 === buttons.length - 1
+              }"
+              (click)="selectButton(1)"
+            >
+              <strong>{{ 3 }}</strong>
+            </button>
+          </div>
+          <div class="col-2">
+            <button
+              class="btn btn-light custom-button"
+              [ngClass]="{
+                pressed: selectedButton === 2,
+                'last-button': 2 === buttons.length - 1
+              }"
+              (click)="selectButton(2)"
+            >
+              <strong>{{ 5 }}</strong>
+            </button>
+          </div>
+          <div class="col-3">
+            <input
+              type="number"
+              class="w-100 h-100 custom-input special-input-padding"
+              placeholder="Username"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              [(ngModel)]="inputValue"
+              (ngModelChange)="onInputChange($event)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 mt-2">
+        <button class="btn btn-danger w-100" (click)="supportButton()">
+          Apoyar
+          {{ price | currency }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

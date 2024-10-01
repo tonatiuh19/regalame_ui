@@ -1,0 +1,100 @@
+.coffee-cup-img-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: normal;
+}
+
+.coffee-cup-img-item {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  padding: 5%;
+}
+
+.coffee-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: normal;
+}
+
+.coffee-item-cup {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  width: 33.3%;
+}
+
+.coffee-item {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  width: 33.3%;
+}
+
+.custom-button {
+  width: 50px !important; /* Default width */
+  height: 50px !important; /* Default height */
+  transition: transform 0.1s ease; /* Smooth transition for the pressed effect */
+  border-radius: 1.175rem;
+  font-weight: 900;
+}
+
+.custom-button.pressed {
+  border: 2px solid #74654e;
+  transform: scale(0.9); /* Scale down the button to create a pressed effect */
+  background-color: #dcdcdc; /* Optional: Change background color when pressed */
+}
+
+.custom-input {
+  border: 2px solid #74654e;
+  border-radius: 1.175rem;
+  padding-left: 30%;
+  font-weight: 900;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
+
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none; /* Hide the element on small screens */
+  }
+
+  .special-input-padding {
+    margin-left: 25px; /* Remove padding on the left */
+  }
+
+  .custom-button {
+    width: 50px !important; /* Default width */
+    height: 100% !important; /* Default height */
+    margin-left: 15px;
+  }
+
+  .custom-button.pressed {
+    transform: scale(
+      0.9
+    ); /* Scale down the button to create a pressed effect */
+  }
+
+  .top-space-mobile {
+    margin-top: 20px; /* Add space at the top on mobile screens */
+  }
+}

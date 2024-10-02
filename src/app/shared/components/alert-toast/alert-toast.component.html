@@ -1,0 +1,4 @@
+<div *ngIf="isVisible" class="alert-toast" [ngClass]="type">
+  <span class="alert-message">{{ message }}</span>
+  <button type="button" class="close" (click)="dismiss()">&times;</button>
+</div>

@@ -1,0 +1,29 @@
+/* Backdrop styling */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1040; /* Ensure it is behind the modal */
+}
+
+/* Show the backdrop when the modal is visible */
+.modal-backdrop.show {
+  opacity: 1;
+}
+
+/* Modal styling */
+.modal {
+  z-index: 1050; /* Ensure it is above the backdrop */
+}
+
+.modal-content {
+  background-color: white; /* Ensure the modal has a solid background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}

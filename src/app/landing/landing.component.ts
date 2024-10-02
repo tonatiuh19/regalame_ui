@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   faArrowRight,
@@ -63,7 +63,8 @@ export class LandingComponent implements OnInit {
     public auth: AuthService,
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -99,11 +100,11 @@ export class LandingComponent implements OnInit {
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((extras: any) => {
             if (extras !== 0) {
-              this.creativeExtra = extras;
               this.isCreativePage = true;
             } else {
               this.isCreativePage = false;
             }
+            this.cdr.detectChanges();
           });
       } else {
         this.router.navigate(['gracias']);

@@ -79,7 +79,6 @@ export class ModalSignComponent implements OnInit {
 
   handleButtonClick(): void {
     if (!this.isSignInLoading) {
-      console.log('Button clicked', this.userNameInput);
       this.store.dispatch(LandingActions.setUserName());
     }
   }

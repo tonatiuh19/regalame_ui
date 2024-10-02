@@ -81,3 +81,18 @@ export const payingFailure = createAction(
   `${actor} Paying Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const updateExtraById = createAction(
+  `${actor} Update Extra By Id`,
+  props<{ extraData: any }>()
+);
+
+export const updateExtraByIdSuccess = createAction(
+  `${actor} Update Extra By Id Success`,
+  props<{ updateResponse: any }>()
+);
+
+export const updateExtraByIdFailure = createAction(
+  `${actor} Update Extra By Id Failure`,
+  props<{ errorResponse: any }>()
+);

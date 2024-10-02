@@ -9,6 +9,7 @@ import { map, Observable } from 'rxjs';
 export class CreativeService {
   public GET_EXTRAS_BY_USER_NAME = `${DOMAIN}/getExtrasByUserName.php`;
   public PAYING = `${DOMAIN}/paying.php`;
+  public UPDATE_EXTRA_BY_ID = `https://garbrix.com/regalame/api/updateExtraById.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -56,5 +57,26 @@ export class CreativeService {
           return response;
         })
       );
+  }
+
+  public updateExtraById(
+    id_extra: number,
+    about: string,
+    confirmation: string,
+    price: string,
+    picture: File
+  ): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('id_extra', id_extra.toString());
+    formData.append('about', about);
+    formData.append('confirmation', confirmation);
+    formData.append('price', price);
+    formData.append('picture', picture);
+
+    return this.httpClient.post(this.UPDATE_EXTRA_BY_ID, formData).pipe(
+      map((response) => {
+        return response;
+      })
+    );
   }
 }

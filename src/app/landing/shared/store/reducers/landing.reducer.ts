@@ -121,6 +121,7 @@ export const LandingReducer = createRehydrateReducer(
   on(LandingActions.getExtrasByUserName, (state: LandingState) => {
     return {
       ...state,
+      editSuccess: false,
       isLoading: true,
     };
   }),
@@ -188,5 +189,30 @@ export const LandingReducer = createRehydrateReducer(
         isPublic_note_fan: 0,
       },
     };
-  })
+  }),
+  on(LandingActions.updateExtraById, (state: LandingState) => {
+    return {
+      ...state,
+      editSuccess: false,
+      isLoading: true,
+    };
+  }),
+  on(LandingActions.updateExtraByIdSuccess, (state: LandingState, {}) => {
+    return {
+      ...state,
+      editSuccess: true,
+      isLoading: false,
+      isError: false,
+    };
+  }),
+  on(
+    LandingActions.updateExtraByIdFailure,
+    (state: LandingState, { errorResponse }) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  )
 );

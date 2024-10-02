@@ -63,3 +63,8 @@ export interface PaymentModel {
 export interface PaymentSuccessModel {
   paymentSuccess: boolean;
 }
+
+export interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}

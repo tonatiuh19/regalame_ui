@@ -1,5 +1,5 @@
 <app-loading-mask *ngIf="isloading$ | async"></app-loading-mask>
-<app-creative *ngIf="isCreativePage" [extras]="creativeExtra"></app-creative>
+<app-creative *ngIf="isCreativePage" [username]="username"></app-creative>
 <app-header [isMain]="!isCreativePage"></app-header>
 <ng-container *ngIf="!isCreativePage">
   <section

@@ -1,0 +1,36 @@
+<div class="reviews-container text-dark">
+  <h4 class="text-center mb-3">Comentarios de Fans:</h4>
+  <div *ngFor="let review of paginatedReviews" class="review-card">
+    <h5>{{ getProcessedText(review.payment_name) }}</h5>
+    <p>{{ getProcessedText(review.note_fan) }}</p>
+    <span class="text-muted">{{ transformDateToSpanish(review.date) }}</span>
+  </div>
+
+  <nav aria-label="Page navigation example" class="pagination-controls">
+    <ul class="pagination">
+      <li class="page-item">
+        <button
+          class="page-link"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </button>
+      </li>
+      <li class="page-item">
+        <span class="page-link">{{ currentPage }} / {{ totalPages }}</span>
+      </li>
+      <li class="page-item">
+        <button
+          class="page-link"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

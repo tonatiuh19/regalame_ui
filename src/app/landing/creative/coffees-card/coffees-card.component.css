@@ -73,7 +73,7 @@
   align-items: center; /* Centers vertically */
 }
 
-@media (max-width: 767px) {
+@media (max-width: 925px) {
   .hide-on-mobile {
     display: none; /* Hide the element on small screens */
   }

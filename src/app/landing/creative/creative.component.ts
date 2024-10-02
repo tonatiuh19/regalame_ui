@@ -1,5 +1,19 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { faLock, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  faLock,
+  faCircleNotch,
+  faPencil,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StripeService } from '../shared/services/stripe.service';
 import { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
@@ -21,17 +35,43 @@ export class CreativeComponent implements OnInit {
 
   @Input() isLogged: boolean = false;
   @Input() extras: any = {};
+  @Input() username: string = '';
+
+  @Output() isCreativePageChange = new EventEmitter<boolean>();
 
   public selectPaymentSuccess$ = this.store.select(
     fromLanding.selectPaymentSuccess
   );
 
+  public selectLandingState$ = this.store.select(
+    fromLanding.selectLandingState
+  );
+
+  public selectExtras$ = this.store.select(fromLanding.selectExtras);
+
+  public isCreativePage = false;
+
+  isEditionVisible: boolean = false;
+
   checkoutForm!: FormGroup;
+  editForm!: FormGroup;
+
   faLock = faLock;
   faCircleNotch = faCircleNotch;
+  faPencil = faPencil;
+  faXmark = faXmark;
+
+  pictureUrl: string = '';
+
+  isPanelVisible: boolean = false;
+  uploadedFiles: any[] = [];
+  isImageSelected: boolean = false;
+
+  showAlertEditSuccess: boolean = false;
 
   public mainExtra: any = {};
   public extraExtras: any = {};
+  public reviews: any[] = [];
 
   public paymentForm: any = {};
 
@@ -60,15 +100,38 @@ export class CreativeComponent implements OnInit {
       isPublic: [true],
       acceptTerms: [true, Validators.requiredTrue],
     });
+
+    this.editForm = this.fb.group({
+      price: ['', [Validators.required, Validators.min(1)]],
+      about: ['', [Validators.required, Validators.minLength(10)]],
+      confirmation: ['', [Validators.required, Validators.minLength(10)]],
+    });
   }
 
   ngOnInit(): void {
-    this.mainExtra = this.extras.extras.find(
-      (extra: any) => extra.active === 4
-    );
-    this.extraExtras = this.extras.extras.filter(
-      (extra: any) => extra.active !== 4
-    );
+    if (this.username) {
+      this.store.dispatch(
+        LandingActions.getExtrasByUserName({ username: this.username })
+      );
+
+      this.selectExtras$
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((extras: any) => {
+          if (extras !== 0) {
+            this.isCreativePage = true;
+            this.mainExtra = extras.extras.find(
+              (extra: any) => extra.active === 4
+            );
+            this.extraExtras = extras.extras.filter(
+              (extra: any) => extra.active !== 4
+            );
+          } else {
+            this.isCreativePage = false;
+          }
+          this.isCreativePageChange.emit(this.isCreativePage);
+        });
+    }
+
     this.pricing = this.mainExtra.price;
 
     this.selectPaymentSuccess$
@@ -79,6 +142,44 @@ export class CreativeComponent implements OnInit {
           this.router.navigate(['gracias']);
         }
       });
+
+    this.selectLandingState$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((state: any) => {
+        if (state.user.user_name === state.extras.user_name) {
+          this.isEditionVisible = true;
+        }
+        if (state.editSuccess) {
+          this.onClosePanel();
+          this.showAlertEditSuccess = true;
+        }
+      });
+
+    this.pictureUrl = this.mainExtra.picture.startsWith('../')
+      ? `https://garbrix.com/regalame/${this.mainExtra.picture.replace(
+          '../',
+          ''
+        )}`
+      : this.mainExtra.picture;
+
+    this.editForm.setValue({
+      price: this.mainExtra.price,
+      about: this.getProcessedText(this.mainExtra.about),
+      confirmation: this.getProcessedText(this.mainExtra.confirmation),
+    });
+
+    if (this.mainExtra.payments.length > 0) {
+      this.mainExtra.payments.map((payment: any) => {
+        if (payment.isPublic_note_fan === 1) {
+          const exists = this.reviews.some(
+            (review) => review.id_payments === payment.id_payments
+          );
+          if (!exists) {
+            this.reviews.push(payment);
+          }
+        }
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -95,7 +196,6 @@ export class CreativeComponent implements OnInit {
   }
 
   priceChange(price: number): void {
-    console.log('priceChange', price);
     this.pricing = price;
     this.openModal();
   }
@@ -136,7 +236,6 @@ export class CreativeComponent implements OnInit {
 
   async handlePayment() {
     if (!this.stripe || !this.card) {
-      console.error('Stripe.js has not loaded yet');
       return;
     }
 
@@ -150,7 +249,6 @@ export class CreativeComponent implements OnInit {
       } else {
         this.isLoadingCheckout = true;
         this.isStripeError = false;
-        console.log('Form Submitted', this.checkoutForm.value);
 
         this.paymentForm = {
           id_user: this.extras.id_user,
@@ -165,7 +263,6 @@ export class CreativeComponent implements OnInit {
           user_name: this.extras.user_name,
         };
 
-        console.log('paymentForm', this.paymentForm);
         this.store.dispatch(
           LandingActions.paying({
             paymentData: {
@@ -178,7 +275,44 @@ export class CreativeComponent implements OnInit {
     } else {
       this.isLoadingCheckout = false;
       this.checkoutForm.markAllAsTouched();
-      console.log('Form is invalid');
+    }
+  }
+
+  onEditPage(): void {
+    this.isPanelVisible = true;
+  }
+
+  onClosePanel(): void {
+    this.isPanelVisible = false;
+  }
+
+  onUpload(event: any) {
+    this.uploadedFiles = [];
+    if (event.currentFiles.length > 0) {
+      for (let file of event.files) {
+        this.uploadedFiles.push(file);
+      }
+      this.isImageSelected = true;
+    }
+  }
+
+  onSubmitEdit(): void {
+    if (this.editForm.valid) {
+      // Handle form submission logic here
+      this.store.dispatch(
+        LandingActions.updateExtraById({
+          extraData: {
+            id_extra: this.mainExtra.id_extra,
+            about: this.editForm.value.about,
+            confirmation: this.editForm.value.confirmation,
+            price: this.editForm.value.price,
+            picture: this.uploadedFiles[0],
+          },
+        })
+      );
+    } else {
+      // Mark all fields as touched to trigger validation messages
+      this.editForm.markAllAsTouched();
     }
   }
 }

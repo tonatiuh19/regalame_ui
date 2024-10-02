@@ -88,8 +88,6 @@ export class LandingEffects {
           )
         ),
         switchMap(([landingEntity, landingUser]) => {
-          /*console.log(landingEntity, landingUser);
-          return of(1);*/
           if (!landingUser.user) {
             return of(
               LandingActions.setUserNameFailure({
@@ -168,6 +166,29 @@ export class LandingEffects {
             }),
             catchError((error) => {
               return of(LandingActions.payingFailure({ errorResponse: error }));
+            })
+          );
+      })
+    );
+  });
+
+  updateExtraById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.updateExtraById),
+      switchMap(({ extraData }) => {
+        const { id_extra, about, confirmation, price, picture } = extraData;
+        return this.creativeService
+          .updateExtraById(id_extra, about, confirmation, price, picture)
+          .pipe(
+            map((response) => {
+              return LandingActions.updateExtraByIdSuccess({
+                updateResponse: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.updateExtraByIdFailure({ errorResponse: error })
+              );
             })
           );
       })

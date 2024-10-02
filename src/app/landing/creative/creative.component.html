@@ -1,16 +1,31 @@
 <section
   class="d-flex justify-content-center align-items-center main-container pt-5 bg-white"
 >
+  <app-alert-toast
+    *ngIf="showAlertEditSuccess"
+    [message]="
+      'Tus cambios estarán visibles en tu página en alrededor de 5 minutos o menos'
+    "
+    [type]="'success'"
+    [duration]="5000"
+  ></app-alert-toast>
   <div class="card w-100 card-container no-padding-mobile">
     <div class="card-body">
+      <button
+        *ngIf="isEditionVisible"
+        class="edit-button btn btn-warning btn-sm"
+        (click)="onEditPage()"
+      >
+        <fa-icon [icon]="faPencil"></fa-icon> Editar mi pagina
+      </button>
       <div class="row">
         <div class="col-sm-6 text-center">
           <div class="row">
             <div class="col-sm-12">
-              <img [src]="mainExtra.picture" class="img-thumbnail custom-img" />
+              <img [src]="pictureUrl" class="img-thumbnail custom-img" />
             </div>
             <div class="col-sm-12 mt-4">
-              <h1 class="custom-heading">{{ extras.user_name }}</h1>
+              <h1 class="custom-heading">{{ username }}</h1>
             </div>
             <div class="col-sm-12">
               <span class="border-span bg-dark text-white">
@@ -29,6 +44,27 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row mt-4 mb-2 edit-button-sm">
+        <div class="col-sm-12">
+          <button
+            *ngIf="isEditionVisible"
+            class="btn btn-warning btn-sm"
+            (click)="onEditPage()"
+          >
+            <fa-icon [icon]="faPencil"></fa-icon> Editar mi pagina
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-light text-white p-5" *ngIf="reviews.length > 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">a</div>
+      <div class="col-sm-6">
+        <app-fans-card-reviews [reviews]="reviews"></app-fans-card-reviews>
       </div>
     </div>
   </div>
@@ -226,3 +262,96 @@
     </div>
   </div>
 </div>
+<p-sidebar [(visible)]="isPanelVisible" position="right" class="custom-sidebar">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 my-3">
+        <h3>
+          Editar mi pagina
+          <button
+            class="btn btn-outline-dark btn-sm float-end"
+            (click)="onClosePanel()"
+          >
+            <fa-icon [icon]="faXmark"></fa-icon>
+          </button>
+        </h3>
+      </div>
+    </div>
+    <div class="row">
+      <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+        <div class="col-sm-12 mb-4 text-center">
+          <p-avatar
+            *ngIf="!isImageSelected"
+            [image]="pictureUrl"
+            styleClass="mr-2"
+            size="xlarge"
+            shape="circle"
+          />
+          <p-fileUpload
+            chooseLabel="Seleccionar imagen"
+            (onSelect)="onUpload($event)"
+            [multiple]="false"
+            accept="image/*"
+            maxFileSize="1000000"
+            [auto]="true"
+          >
+            <ng-template pTemplate="content">
+              <ul *ngIf="uploadedFiles.length"></ul>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label class="form-label label-edit-strong"
+              >Precio de tu café</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              formControlName="price"
+              [ngClass]="{
+                'is-invalid':
+                  editForm.get('price')?.touched &&
+                  editForm.get('price')?.invalid
+              }"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label label-edit-strong"
+              >Escribe que haces, tu pasión, tu dedicación:</label
+            >
+            <textarea
+              class="form-control no-rezie-text-area"
+              formControlName="about"
+              rows="3"
+              [ngClass]="{
+                'is-invalid':
+                  editForm.get('about')?.touched &&
+                  editForm.get('about')?.invalid
+              }"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label label-edit-strong"
+              >Este mensaje le llegara a tu fan una vez haya pagado uno o varios
+              cafés:</label
+            >
+            <textarea
+              class="form-control no-rezie-text-area"
+              formControlName="confirmation"
+              rows="3"
+              [ngClass]="{
+                'is-invalid':
+                  editForm.get('confirmation')?.touched &&
+                  editForm.get('confirmation')?.invalid
+              }"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-success w-100">
+            Actualizar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</p-sidebar>

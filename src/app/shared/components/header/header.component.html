@@ -59,7 +59,9 @@
     </div>
     <div class="d-none d-md-block">
       <a class="btn btn-sm order-1-0 me-1"> Explorar creadores </a>
-      <a class="btn btn-sm order-1-0 me-1"> Comisiones </a>
+      <a class="btn btn-sm order-1-0 me-1" (click)="goToComitions()">
+        Comisiones
+      </a>
       <button
         *ngIf="!isLogged"
         class="btn btn-sm btn-outline-dark me-1 order-0"
@@ -94,6 +96,9 @@
             <button class="dropdown-item" (click)="logOut()">
               Cerrar sesión
             </button>
+          </li>
+          <li>
+            <button class="dropdown-item" (click)="logOut()">Mis pagos</button>
           </li>
         </ul>
       </div>

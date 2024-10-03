@@ -89,6 +89,10 @@ export class HeaderComponent implements OnInit {
     this.auth.logout();
   }
 
+  goToComitions(): void {
+    this.router.navigate(['comisiones']);
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const navbar = document.getElementById('navbar');

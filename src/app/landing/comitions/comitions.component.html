@@ -1,0 +1,141 @@
+<app-header [isMain]="false"></app-header>
+<section
+  class="d-flex justify-content-center align-items-center main-container pt-5 bg-white"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-center">Comisiones</h1>
+        <span class="text-block text-center"
+          >Simple, directo, sin comisiones ocultas.</span
+        >
+      </div>
+      <div class="col-12">
+        <div class="pricing-card">
+          <div class="card-header">
+            <p></p>
+          </div>
+          <div class="card-body">
+            <h3 class="no-padding-iva">14.5% <small>/ transacción</small></h3>
+            <h6 class="text-muted">+ IVA</h6>
+            <ul class="mt-5">
+              <li>
+                <fa-icon [icon]="faCheck"></fa-icon> Todos los cafés que
+                necesites
+              </li>
+              <li><fa-icon [icon]="faCheck"></fa-icon> Soporte 24/7</li>
+              <li>
+                <fa-icon [icon]="faCheck"></fa-icon> Transacciones 100% seguras
+              </li>
+            </ul>
+            <button class="btn btn-primary" (click)="scrollToEarnings()">
+              Calcular tus ganancias <fa-icon [icon]="faArrowRight"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section #earningsSection class="bg-light">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>¿Cuanto podrías estar ganando?</h2>
+      </div>
+      <div class="col-12">
+        <div class="calculator-card mx-5">
+          <div class="card-body">
+            <form class="form-floating">
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                class="form-control"
+                [formControl]="amount"
+              />
+              <label for="floatingInputInvalid">Ingresa el monto:</label>
+            </form>
+            <div class="form-group text-start mt-4">
+              <div class="row">
+                <div class="col-6">
+                  <span class="h6">Comisión:</span>
+                  <span class="badge text-bg-dark ms-1 large-badge"
+                    >{{ commission | currency }}
+                    <span class="small-text">mxn</span></span
+                  >
+                </div>
+                <div class="col-6">
+                  <span class="h6">IVA:</span>
+                  <span class="badge text-bg-dark ms-1 large-badge"
+                    >{{ iva | currency }}
+                    <span class="small-text">mxn</span></span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h4>Deposito a tu cuenta:</h4>
+              <span class="badge text-bg-dark large-badge-earnings"
+                >{{ earnings | currency }}
+                <span class="small-text">mxn</span></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-white">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>¿Por qué Regalame un Café?</h2>
+      </div>
+    </div>
+    <div class="col-12">
+      <ul class="list-group list-group-flush mt-3">
+        <li class="list-group-item">
+          <h6>
+            <fa-icon [icon]="faArrowCircleRight"></fa-icon> Transacciones
+            seguras
+          </h6>
+          <small class="text-muted"
+            >Verifica automáticamente y en tiempo real todas las
+            transacciones.</small
+          >
+        </li>
+        <li class="list-group-item">
+          <h6>
+            <fa-icon [icon]="faArrowCircleRight"></fa-icon> Más ventas exitosas
+          </h6>
+          <small class="text-muted"
+            >Disminución de la posibilidad de operaciones rechazadas.</small
+          >
+        </li>
+        <li class="list-group-item">
+          <h6>
+            <fa-icon [icon]="faArrowCircleRight"></fa-icon> Comisiones
+            transparentes
+          </h6>
+          <small class="text-muted"
+            >Comisiones claras y competitivas para potenciar tu
+            crecimiento.</small
+          >
+        </li>
+        <li class="list-group-item">
+          <h6>
+            <fa-icon [icon]="faArrowCircleRight"></fa-icon> Protección contra
+            fraude
+          </h6>
+          <small class="text-muted">
+            Protección contra fraudes y cargos no autorizados para que puedas
+            ofrecer una experiencia segura a tus seguidores.
+          </small>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

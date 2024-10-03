@@ -12,6 +12,7 @@ import { ModalSignModule } from '../shared/components/modal-sign/modal-sign.modu
 import { LoadingMaskModule } from '../shared/components/loading-mask/loading-mask.module';
 import { CreativeModule } from './creative/creative.module';
 import { ThankYouModule } from './thank-you/thank-you.module';
+import { ComitionsModule } from './comitions/comitions.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -27,6 +28,7 @@ import { ThankYouModule } from './thank-you/thank-you.module';
     LoadingMaskModule,
     CreativeModule,
     ThankYouModule,
+    ComitionsModule,
     AuthModule.forRoot({
       domain: 'dev-awc4vpkkzroxivyw.us.auth0.com',
       clientId: 'le6E7j4Rg4rkNZGoMJrlehW7KZPGQilA',

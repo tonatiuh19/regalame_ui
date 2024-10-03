@@ -240,5 +240,58 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(LandingActions.getUserCategories, (state: LandingState) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.getUserCategoriesSuccess,
+    (state: LandingState, { categories }) => {
+      return {
+        ...state,
+        categories: categories,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getUserCategoriesFailure,
+    (state: LandingState, { errorResponse }) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(LandingActions.updateUserByUserId, (state: LandingState) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.updateUserByUserIdSuccess,
+    (state: LandingState, { updateResponse }) => {
+      return {
+        ...state,
+        user: updateResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.updateUserByUserIdFailure,
+    (state: LandingState, { errorResponse }) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

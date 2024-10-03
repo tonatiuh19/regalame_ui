@@ -14,6 +14,7 @@ import { CreativeModule } from './creative/creative.module';
 import { ThankYouModule } from './thank-you/thank-you.module';
 import { ComitionsModule } from './comitions/comitions.module';
 import { EarningsModule } from './earnings/earnings.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -31,6 +32,7 @@ import { EarningsModule } from './earnings/earnings.module';
     ThankYouModule,
     ComitionsModule,
     EarningsModule,
+    ProfileModule,
     AuthModule.forRoot({
       domain: 'dev-awc4vpkkzroxivyw.us.auth0.com',
       clientId: 'le6E7j4Rg4rkNZGoMJrlehW7KZPGQilA',

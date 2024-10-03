@@ -1,0 +1,164 @@
+<app-loading-mask *ngIf="isloading$ | async"></app-loading-mask>
+<app-header [isMain]="false"></app-header>
+<section
+  class="d-flex justify-content-center align-items-center main-container bg-white"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mt-4 mb-5">
+          <div class="card-header">
+            <h3>Mi Perfil</h3>
+          </div>
+          <div class="card-body">
+            <ul class="nav nav-tabs" id="profileTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link active"
+                  id="personal-info-tab"
+                  data-bs-toggle="tab"
+                  href="#personal-info"
+                  role="tab"
+                  aria-controls="personal-info"
+                  aria-selected="true"
+                  >Información</a
+                >
+              </li>
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link"
+                  id="security-tab"
+                  data-bs-toggle="tab"
+                  href="#security"
+                  role="tab"
+                  aria-controls="security"
+                  aria-selected="false"
+                  >Datos bancarios</a
+                >
+              </li>
+            </ul>
+            <div class="tab-content" id="profileTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="personal-info"
+                role="tabpanel"
+                aria-labelledby="personal-info-tab"
+              >
+                <!-- Personal Info Content -->
+                <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                  <div class="form-floating mb-3 mt-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="nombre"
+                      [ngClass]="{
+                        'is-invalid':
+                          profileForm.get('nombre')?.invalid &&
+                          profileForm.get('nombre')?.touched
+                      }"
+                    />
+                    <label for="floatingInput">Nombre:</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="apellido"
+                      [ngClass]="{
+                        'is-invalid':
+                          profileForm.get('apellido')?.invalid &&
+                          profileForm.get('apellido')?.touched
+                      }"
+                    />
+                    <label for="floatingInput">Apellido:</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="floatingInput"
+                      formControlName="telefono"
+                      [ngClass]="{
+                        'is-invalid':
+                          profileForm.get('telefono')?.invalid &&
+                          profileForm.get('telefono')?.touched
+                      }"
+                    />
+                    <label for="floatingInput">Teléfono:</label>
+                  </div>
+
+                  <div class="form-group mt-3">
+                    <label for="creatives"
+                      >Selecciona una o mas categorias de como te
+                      defines:</label
+                    >
+                    <div
+                      class="btn-group-toggle row text-center mt-3"
+                      data-toggle="buttons"
+                    >
+                      <label
+                        class="btn btn-secondary col-sm-4"
+                        *ngFor="let option of categoriesUser"
+                        [class.active]="
+                          selectedValues.includes(option.id_categories)
+                        "
+                        (click)="
+                          onSelectionChange($event, option.id_categories)
+                        "
+                      >
+                        <input
+                          type="checkbox"
+                          class="d-none"
+                          name="options"
+                          [id]="'option-' + option.id_categories"
+                          [value]="option.id_categories"
+                          [checked]="
+                            selectedValues.includes(option.id_categories)
+                          "
+                        />
+                        <fa-icon
+                          [icon]="getIconById(option.id_categories)"
+                        ></fa-icon>
+                        <span class="ms-1">{{ option.category }}</span>
+                      </label>
+                      <div
+                        *ngIf="
+                          profileForm.controls['categories'].invalid &&
+                          profileForm.controls['categories'].touched
+                        "
+                        class="text-danger mt-2"
+                      >
+                        <small>Al menos debes seleccionar una categoria</small>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-success w-100 mt-5">Guardar</button>
+                </form>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="security"
+                role="tabpanel"
+                aria-labelledby="security-tab"
+              >
+                <!-- Security Content -->
+                <h5 class="mt-3">¿En donde depositamos tu dinero?</h5>
+                <div class="form-floating mb-3 mt-3">
+                  <input type="text" class="form-control" id="floatingInput" />
+                  <label for="floatingInput">Banco:</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" />
+                  <label for="floatingInput">CLABE:</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

@@ -217,6 +217,51 @@ export class LandingEffects {
     );
   });
 
+  getUserCategories$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getUserCategories),
+      switchMap(() => {
+        return this.creativeService.getUserCategories().pipe(
+          map((response) => {
+            return LandingActions.getUserCategoriesSuccess({
+              categories: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getUserCategoriesFailure({ errorResponse: error })
+            );
+          })
+        );
+      })
+    );
+  });
+
+  updateUserByUserId$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.updateUserByUserId),
+      switchMap(({ userData }) => {
+        const { id_user, name, last_name, phone, categories } = userData;
+        return this.creativeService
+          .updateUserByUserId(id_user, name, last_name, phone, categories)
+          .pipe(
+            map((response) => {
+              return LandingActions.updateUserByUserIdSuccess({
+                updateResponse: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.updateUserByUserIdFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

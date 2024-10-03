@@ -4,6 +4,7 @@ export interface LandingState {
   extras?: ExtrasModel;
   payment?: PaymentModel;
   payments?: PaymentsModel[];
+  categories?: CategoriesModel[];
   paymentSuccess?: PaymentSuccessModel;
   isUserinModalSign?: boolean;
   isLoading?: boolean;
@@ -27,6 +28,7 @@ export interface UserModel {
   phone: number;
   about: string;
   user_name: string;
+  categories?: any;
 }
 
 export interface ExtrasModel {
@@ -81,4 +83,10 @@ export interface PaymentsModel {
   payment_name: string;
   amount: string;
   transfered: boolean;
+}
+
+export interface CategoriesModel {
+  id_categories: number;
+  category: string;
+  active: number;
 }

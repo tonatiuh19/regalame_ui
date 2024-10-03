@@ -23,11 +23,14 @@ export class HeaderComponent implements OnInit {
   @ViewChild('modal') modal!: ModalSignComponent;
   @Input() isMain = true;
 
-  public selectUser$ = this.store.select(fromLanding.selectUser);
+  public selectLandingState$ = this.store.select(
+    fromLanding.selectLandingState
+  );
 
   public isLogged = false;
 
   public user: any = {};
+  public isPayments = false;
   public isNotUserName = false;
 
   faUserCircle = faUserCircle;
@@ -41,13 +44,19 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
-      this.user = user;
-      this.isLogged = !!(user && this.user.id_user !== 0);
-      if (this.user.user_name === '') {
-        this.isNotUserName = true;
-      }
-    });
+    this.selectLandingState$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((state) => {
+        this.user = state.user;
+        this.isLogged = !!(state.user && this.user.id_user !== 0);
+        if (this.user.user_name === '') {
+          this.isNotUserName = true;
+        }
+
+        if ((state.payments ?? []).length > 0) {
+          this.isPayments = true;
+        }
+      });
 
     this.auth.user$.subscribe((profile) => {
       if (profile) {
@@ -95,6 +104,10 @@ export class HeaderComponent implements OnInit {
 
   goToEarnings(): void {
     this.router.navigate(['mispagos']);
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['miperfil']);
   }
 
   @HostListener('window:scroll', [])

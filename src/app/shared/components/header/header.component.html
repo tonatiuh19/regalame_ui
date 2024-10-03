@@ -48,9 +48,14 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
-            <li>
+            <li *ngIf="isPayments">
               <button class="dropdown-item" (click)="goToEarnings()">
                 Mis pagos
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item" (click)="goToProfile()">
+                Mi Perfil
               </button>
             </li>
             <li>
@@ -97,9 +102,14 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="dropdownMenuButton"
         >
-          <li>
+          <li *ngIf="isPayments">
             <button class="dropdown-item" (click)="goToEarnings()">
               Mis pagos
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" (click)="goToProfile()">
+              Mi Perfil
             </button>
           </li>
           <li>

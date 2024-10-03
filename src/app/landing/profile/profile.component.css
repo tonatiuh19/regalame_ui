@@ -1,0 +1,32 @@
+.main-container {
+  position: relative;
+  background-size: cover;
+  background-attachment: fixed; /* Fixed background image */
+  overflow: hidden;
+  padding-top: 10vh !important;
+}
+
+.btn-group-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 1.375rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-secondary.active {
+  background-color: #adb5bd;
+  color: white;
+}
+
+.btn-secondary .fa-icon {
+  margin-right: 5px;
+}

@@ -111,3 +111,30 @@ export const getPaymentsByUserIdFailure = createAction(
   `${actor} Get Payments By User Id Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const getUserCategories = createAction(`${actor} Get User Categories`);
+
+export const getUserCategoriesSuccess = createAction(
+  `${actor} Get User Categories Success`,
+  props<{ categories: any }>()
+);
+
+export const getUserCategoriesFailure = createAction(
+  `${actor} Get User Categories Failure`,
+  props<{ errorResponse: any }>()
+);
+
+export const updateUserByUserId = createAction(
+  `${actor} Update User By User Id`,
+  props<{ userData: any }>()
+);
+
+export const updateUserByUserIdSuccess = createAction(
+  `${actor} Update User By User Id Success`,
+  props<{ updateResponse: any }>()
+);
+
+export const updateUserByUserIdFailure = createAction(
+  `${actor} Update User By User Id Failure`,
+  props<{ errorResponse: any }>()
+);

@@ -11,6 +11,8 @@ export class CreativeService {
   public PAYING = `${DOMAIN}/paying.php`;
   public UPDATE_EXTRA_BY_ID = `https://garbrix.com/regalame/api/updateExtraById.php`;
   public GET_PAYMENTS_BY_USER_ID = `${DOMAIN}/getPaymentsByUserId.php`;
+  public GET_USER_CATEGORIES = `${DOMAIN}/getUserCategories.php`;
+  public UPDATE_USER_BY_ID = `${DOMAIN}/updateUserByUserId.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -85,6 +87,36 @@ export class CreativeService {
     return this.httpClient
       .post(this.GET_PAYMENTS_BY_USER_ID, {
         id_user: id_user,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getUserCategories(): Observable<any> {
+    return this.httpClient.post(this.GET_USER_CATEGORIES, {}).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  public updateUserByUserId(
+    id_user: number,
+    name: string,
+    last_name: string,
+    phone: string,
+    categories: any
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.UPDATE_USER_BY_ID, {
+        id_user: id_user,
+        name: name,
+        last_name: last_name,
+        phone: phone,
+        categories: categories,
       })
       .pipe(
         map((response) => {

@@ -153,3 +153,5 @@ export const updateUserPaymentByUserIdFailure = createAction(
   `${actor} Update User Payment By User Id Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const toogleLoading = createAction(`${actor} Toogle Loading`);

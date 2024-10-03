@@ -13,6 +13,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { AlertToastModule } from '../../shared/components/alert-toast/alert-toast.module';
 import { FansCardReviewsModule } from './fans-card-reviews/fans-card-reviews.module';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [CreativeComponent],
@@ -30,6 +31,7 @@ import { FansCardReviewsModule } from './fans-card-reviews/fans-card-reviews.mod
     AvatarModule,
     AlertToastModule,
     FansCardReviewsModule,
+    NgxPayPalModule,
   ],
   exports: [CreativeComponent],
 })

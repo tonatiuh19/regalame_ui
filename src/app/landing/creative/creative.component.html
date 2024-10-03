@@ -95,7 +95,7 @@
           <div class="row">
             <div class="col-sm-12 text-center">
               <h3 class="custom-heading">
-                {{ extras.user_name }}
+                {{ username }}
                 <span
                   #closeButtonModal
                   type="button"
@@ -196,6 +196,7 @@
                     data-bs-target="#flush-collapseOne"
                     aria-expanded="false"
                     aria-controls="flush-collapseOne"
+                    (click)="setStripe()"
                   >
                     <app-payment-types-inline></app-payment-types-inline>
                   </button>
@@ -248,11 +249,18 @@
                     value="paypalBtn"
                     type="submit"
                     class="btn btn-warning w-100"
+                    *ngIf="!showPaypalButtons"
+                    (click)="setPaypal()"
                   >
                     <app-payment-types-inline
                       [isPaypal]="true"
                     ></app-payment-types-inline>
                   </button>
+                  <span class="badge text-bg-danger my-2" *ngIf="isErrorPaypal">
+                    Vuelve a intentarlo, algo salió mal
+                  </span>
+                  <ngx-paypal *ngIf="showPaypalButtons" [config]="payPalConfig">
+                  </ngx-paypal>
                 </div>
               </div>
             </div>

@@ -320,5 +320,11 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
-  )
+  ),
+  on(LandingActions.toogleLoading, (state: LandingState) => {
+    return {
+      ...state,
+      isLoading: !state.isLoading,
+    };
+  })
 );

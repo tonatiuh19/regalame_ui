@@ -22,6 +22,7 @@ import { LandingActions } from '../shared/store/actions';
 import { fromLanding } from '../shared/store/selectors';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
+import { ICreateOrderRequest } from 'ngx-paypal';
 
 @Component({
   selector: 'app-creative',
@@ -81,6 +82,14 @@ export class CreativeComponent implements OnInit {
   public stripeErrorMessage = '';
   public isLoadingCheckout = false;
 
+  public paymentType: 'stripe' | 'paypal' = 'stripe';
+
+  public payPalConfig: any;
+  public showPaypalButtons: boolean = false;
+  public isErrorPaypal: boolean = false;
+
+  public userId: number = 0;
+
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
   private card: StripeCardElement | null = null;
@@ -118,6 +127,7 @@ export class CreativeComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((extras: any) => {
           if (extras !== 0) {
+            console.log(extras);
             this.isCreativePage = true;
             this.mainExtra = extras.extras.find(
               (extra: any) => extra.active === 4
@@ -125,12 +135,15 @@ export class CreativeComponent implements OnInit {
             this.extraExtras = extras.extras.filter(
               (extra: any) => extra.active !== 4
             );
+            this.userId = extras.id_user;
           } else {
             this.isCreativePage = false;
           }
           this.isCreativePageChange.emit(this.isCreativePage);
         });
     }
+
+    console.log(this.userId);
 
     this.pricing = this.mainExtra.price;
 
@@ -180,6 +193,103 @@ export class CreativeComponent implements OnInit {
         }
       });
     }
+
+    this.payPalConfig = {
+      currency: 'MXN',
+      clientId:
+        'AXZCEawZBotPezmoioG0Vw-Hqo8Tjuvh9rcYszUkQseaaTGIxfOViQb_o5XpMHcgYnOVie8dfA3EbrrT',
+      createOrder: (data: any) =>
+        <ICreateOrderRequest>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                currency_code: 'MXN',
+                value: this.pricing.toString(),
+                breakdown: {
+                  item_total: {
+                    currency_code: 'MXN',
+                    value: this.pricing.toString(),
+                  },
+                },
+              },
+              items: [
+                {
+                  name: `Donación Regalameuncafe.com | ${this.extras.id_user}`,
+                  quantity: '1',
+                  category: 'DIGITAL_GOODS',
+                  unit_amount: {
+                    currency_code: 'MXN',
+                    value: this.pricing.toString(),
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      advanced: {
+        commit: 'true',
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+      },
+      onApprove: (data: any, actions: any) => {
+        /*console.log(
+          'onApprove - transaction was approved, but not authorized',
+          data,
+          actions
+        );
+        actions.order.get().then((details: any) => {
+          console.log(
+            'onApprove - you can get full order details inside onApprove: ',
+            details
+          );
+        });*/
+      },
+      onClientAuthorization: (data: any) => {
+        /*console.log(
+          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+          data
+        );*/
+        this.paymentForm = {
+          id_user: this.userId,
+          id_extra: this.mainExtra.id_extra,
+          email_user: this.checkoutForm.value.email,
+          amount: this.pricing,
+          description: this.mainExtra.title,
+          question_answer: '',
+          payment_name: this.checkoutForm.value.fullName,
+          note_fan: this.checkoutForm.value.message,
+          isPublic_note_fan: this.checkoutForm.value.isPublic,
+          user_name: this.username,
+          payment_type: 'paypal',
+          token: data.id,
+        };
+
+        console.log(this.paymentForm);
+
+        this.store.dispatch(
+          LandingActions.paying({
+            paymentData: {
+              ...this.paymentForm,
+            },
+          })
+        );
+        this.store.dispatch(LandingActions.toogleLoading());
+      },
+      onCancel: (data: any, actions: any) => {
+        console.log('OnCancel', data, actions);
+        this.store.dispatch(LandingActions.toogleLoading());
+      },
+      onError: (err: any) => {
+        console.log('OnError', err);
+      },
+      onClick: (data: any, actions: any) => {
+        console.log('onClick', data, actions);
+        this.store.dispatch(LandingActions.toogleLoading());
+      },
+    };
   }
 
   ngAfterViewInit(): void {
@@ -235,46 +345,58 @@ export class CreativeComponent implements OnInit {
   }
 
   async handlePayment() {
-    if (!this.stripe || !this.card) {
-      return;
-    }
-
-    const { token, error } = await this.stripe.createToken(this.card);
-
-    if (this.checkoutForm.valid) {
-      if (error) {
-        this.isLoadingCheckout = false;
-        this.isStripeError = true;
-        this.stripeErrorMessage = error.message || '';
-      } else {
-        this.isLoadingCheckout = true;
-        this.isStripeError = false;
-
-        this.paymentForm = {
-          id_user: this.extras.id_user,
-          id_extra: this.mainExtra.id_extra,
-          email_user: this.checkoutForm.value.email,
-          amount: this.pricing,
-          description: this.mainExtra.title,
-          question_answer: '',
-          payment_name: this.checkoutForm.value.fullName,
-          note_fan: this.checkoutForm.value.message,
-          isPublic_note_fan: this.checkoutForm.value.isPublic,
-          user_name: this.extras.user_name,
-        };
-
-        this.store.dispatch(
-          LandingActions.paying({
-            paymentData: {
-              ...this.paymentForm,
-              token: token.id,
-            },
-          })
-        );
+    if (this.paymentType === 'stripe') {
+      if (!this.stripe || !this.card) {
+        return;
       }
-    } else {
-      this.isLoadingCheckout = false;
-      this.checkoutForm.markAllAsTouched();
+
+      const { token, error } = await this.stripe.createToken(this.card);
+
+      if (this.checkoutForm.valid) {
+        if (error) {
+          this.isLoadingCheckout = false;
+          this.isStripeError = true;
+          this.stripeErrorMessage = error.message || '';
+        } else {
+          this.isLoadingCheckout = true;
+          this.isStripeError = false;
+
+          this.paymentForm = {
+            id_user: this.userId,
+            id_extra: this.mainExtra.id_extra,
+            email_user: this.checkoutForm.value.email,
+            amount: this.pricing,
+            description: this.mainExtra.title,
+            question_answer: '',
+            payment_name: this.checkoutForm.value.fullName,
+            note_fan: this.checkoutForm.value.message,
+            isPublic_note_fan: this.checkoutForm.value.isPublic,
+            user_name: this.username,
+            payment_type: 'stripe',
+          };
+
+          console.log(this.paymentForm);
+
+          this.store.dispatch(
+            LandingActions.paying({
+              paymentData: {
+                ...this.paymentForm,
+                token: token.id,
+              },
+            })
+          );
+        }
+      } else {
+        this.isLoadingCheckout = false;
+        this.checkoutForm.markAllAsTouched();
+      }
+    } else if (this.paymentType === 'paypal') {
+      if (this.checkoutForm.valid) {
+        this.showPaypalButtons = true;
+      } else {
+        this.isLoadingCheckout = false;
+        this.checkoutForm.markAllAsTouched();
+      }
     }
   }
 
@@ -314,5 +436,13 @@ export class CreativeComponent implements OnInit {
       // Mark all fields as touched to trigger validation messages
       this.editForm.markAllAsTouched();
     }
+  }
+
+  setStripe() {
+    this.paymentType = 'stripe';
+  }
+
+  setPaypal() {
+    this.paymentType = 'paypal';
   }
 }

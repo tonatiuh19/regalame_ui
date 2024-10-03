@@ -40,6 +40,7 @@ export class CreativeService {
     note_fan: string,
     isPublic_note_fan: boolean,
     user_name: string,
+    payment_type: string,
     token: string
   ): Observable<any> {
     return this.httpClient
@@ -54,6 +55,7 @@ export class CreativeService {
         note_fan: note_fan,
         isPublic_note_fan: isPublic_note_fan,
         user_name: user_name,
+        payment_type: payment_type,
         token: token,
       })
       .pipe(

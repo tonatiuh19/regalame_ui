@@ -156,6 +156,7 @@ export class LandingEffects {
             paymentData.note_fan,
             paymentData.isPublic_note_fan,
             paymentData.user_name,
+            paymentData.payment_type,
             paymentData.token
           )
           .pipe(

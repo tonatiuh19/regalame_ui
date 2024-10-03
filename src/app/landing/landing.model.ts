@@ -3,6 +3,7 @@ export interface LandingState {
   user?: UserModel;
   extras?: ExtrasModel;
   payment?: PaymentModel;
+  payments?: PaymentsModel[];
   paymentSuccess?: PaymentSuccessModel;
   isUserinModalSign?: boolean;
   isLoading?: boolean;
@@ -67,4 +68,17 @@ export interface PaymentSuccessModel {
 export interface UploadEvent {
   originalEvent: Event;
   files: File[];
+}
+
+export interface PaymentsModel {
+  id_payments: number;
+  id_user: number;
+  id_extra: number;
+  date: Date;
+  question_answer: string;
+  note_fan: string;
+  isPublic_note_fan: number;
+  payment_name: string;
+  amount: string;
+  transfered: boolean;
 }

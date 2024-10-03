@@ -93,6 +93,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['comisiones']);
   }
 
+  goToEarnings(): void {
+    this.router.navigate(['mispagos']);
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const navbar = document.getElementById('navbar');

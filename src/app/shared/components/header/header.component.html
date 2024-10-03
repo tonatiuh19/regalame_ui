@@ -49,6 +49,11 @@
             aria-labelledby="dropdownMenuButton"
           >
             <li>
+              <button class="dropdown-item" (click)="goToEarnings()">
+                Mis pagos
+              </button>
+            </li>
+            <li>
               <button class="dropdown-item" (click)="logOut()">
                 Cerrar sesión
               </button>
@@ -93,12 +98,14 @@
           aria-labelledby="dropdownMenuButton"
         >
           <li>
-            <button class="dropdown-item" (click)="logOut()">
-              Cerrar sesión
+            <button class="dropdown-item" (click)="goToEarnings()">
+              Mis pagos
             </button>
           </li>
           <li>
-            <button class="dropdown-item" (click)="logOut()">Mis pagos</button>
+            <button class="dropdown-item" (click)="logOut()">
+              Cerrar sesión
+            </button>
           </li>
         </ul>
       </div>

@@ -214,5 +214,31 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(LandingActions.getPaymentsByUserId, (state: LandingState) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.getPaymentsByUserIdSuccess,
+    (state: LandingState, { payments }) => {
+      return {
+        ...state,
+        payments: payments,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getPaymentsByUserIdFailure,
+    (state: LandingState, { errorResponse }) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

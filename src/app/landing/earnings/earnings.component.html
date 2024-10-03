@@ -1,0 +1,85 @@
+<app-loading-mask *ngIf="isloading$ | async"></app-loading-mask>
+<app-header [isMain]="false"></app-header>
+<section
+  class="d-flex justify-content-center align-items-center main-container bg-white"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="earnings-list-container">
+          <h2>Mis Pagos</h2>
+          <div class="earnings-header">
+            <div class="earning-date">Fecha</div>
+            <div class="earning-amount">Monto</div>
+            <div class="earning-description">Seguidor</div>
+            <div class="earning-description">Transferido</div>
+          </div>
+          <div class="earnings-body">
+            <div class="earning-row" *ngFor="let earning of paginatedPayments">
+              <div class="earning-date">
+                {{ transformDateToSpanish(earning.date) }}
+              </div>
+              <div class="earning-amount">{{ earning.amount | currency }}</div>
+              <div class="earning-description">
+                <strong>{{ getProcessedText(earning.payment_name) }}</strong
+                >: "{{ getProcessedText(earning.note_fan) }}"
+                <span
+                  *ngIf="earning.isPublic_note_fan == 0"
+                  class="badge text-bg-warning"
+                  ><fa-icon [icon]="faExclamation"></fa-icon
+                ></span>
+              </div>
+              <div class="earning-description">
+                <span
+                  *ngIf="earning.transfered == 0"
+                  class="badge text-bg-danger"
+                  ><fa-icon [icon]="faXmark"></fa-icon
+                ></span>
+                <span
+                  *ngIf="earning.transfered != 0"
+                  class="badge text-bg-success"
+                  ><fa-icon [icon]="faCheck"></fa-icon
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-center pb-5">
+        <nav
+          aria-label="Page navigation example"
+          class="pagination-controls text-center"
+        >
+          <ul class="pagination">
+            <li class="page-item">
+              <button
+                class="page-link"
+                (click)="previousPage()"
+                [disabled]="currentPage === 1"
+                aria-label="Previous"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </button>
+            </li>
+            <li class="page-item">
+              <span class="page-link"
+                >{{ currentPage }} / {{ totalPages }}</span
+              >
+            </li>
+            <li class="page-item">
+              <button
+                class="page-link"
+                (click)="nextPage()"
+                [disabled]="currentPage === totalPages"
+                aria-label="Next"
+              >
+                <span aria-hidden="true">&raquo;</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>

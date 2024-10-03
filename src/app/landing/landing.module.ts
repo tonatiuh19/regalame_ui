@@ -13,6 +13,7 @@ import { LoadingMaskModule } from '../shared/components/loading-mask/loading-mas
 import { CreativeModule } from './creative/creative.module';
 import { ThankYouModule } from './thank-you/thank-you.module';
 import { ComitionsModule } from './comitions/comitions.module';
+import { EarningsModule } from './earnings/earnings.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -29,6 +30,7 @@ import { ComitionsModule } from './comitions/comitions.module';
     CreativeModule,
     ThankYouModule,
     ComitionsModule,
+    EarningsModule,
     AuthModule.forRoot({
       domain: 'dev-awc4vpkkzroxivyw.us.auth0.com',
       clientId: 'le6E7j4Rg4rkNZGoMJrlehW7KZPGQilA',

@@ -195,6 +195,28 @@ export class LandingEffects {
     );
   });
 
+  getPaymentsByUserId$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getPaymentsByUserId),
+      switchMap(({ userId }) => {
+        return this.creativeService.getPaymentsByUserId(userId).pipe(
+          map((response) => {
+            return LandingActions.getPaymentsByUserIdSuccess({
+              payments: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getPaymentsByUserIdFailure({
+                errorResponse: error,
+              })
+            );
+          })
+        );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

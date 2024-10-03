@@ -36,6 +36,7 @@ export const initialLandingState: LandingState = {
     note_fan: '',
     isPublic_note_fan: 0,
   },
+  payments: [],
   isLoading: false,
   isError: false,
   isUserinModalSign: false,

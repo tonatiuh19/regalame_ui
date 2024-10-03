@@ -96,3 +96,18 @@ export const updateExtraByIdFailure = createAction(
   `${actor} Update Extra By Id Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const getPaymentsByUserId = createAction(
+  `${actor} Get Payments By User Id`,
+  props<{ userId: any }>()
+);
+
+export const getPaymentsByUserIdSuccess = createAction(
+  `${actor} Get Payments By User Id Success`,
+  props<{ payments: any }>()
+);
+
+export const getPaymentsByUserIdFailure = createAction(
+  `${actor} Get Payments By User Id Failure`,
+  props<{ errorResponse: any }>()
+);

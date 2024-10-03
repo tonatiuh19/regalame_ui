@@ -10,6 +10,7 @@ export class CreativeService {
   public GET_EXTRAS_BY_USER_NAME = `${DOMAIN}/getExtrasByUserName.php`;
   public PAYING = `${DOMAIN}/paying.php`;
   public UPDATE_EXTRA_BY_ID = `https://garbrix.com/regalame/api/updateExtraById.php`;
+  public GET_PAYMENTS_BY_USER_ID = `${DOMAIN}/getPaymentsByUserId.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -78,5 +79,17 @@ export class CreativeService {
         return response;
       })
     );
+  }
+
+  public getPaymentsByUserId(id_user: number): Observable<any> {
+    return this.httpClient
+      .post(this.GET_PAYMENTS_BY_USER_ID, {
+        id_user: id_user,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
   }
 }

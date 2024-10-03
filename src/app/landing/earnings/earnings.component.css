@@ -1,0 +1,80 @@
+.main-container {
+  padding-top: 10vh !important;
+  position: relative;
+  background-size: cover;
+  background-attachment: fixed; /* Fixed background image */
+  overflow: hidden;
+}
+
+.earnings-list-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.earnings-list-container h2 {
+  margin-bottom: 20px;
+}
+
+.earnings-header,
+.earning-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.earnings-header {
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.earning-date,
+.earning-amount,
+.earning-description {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+}
+
+.earning-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .earnings-header {
+    display: none;
+  }
+
+  .earnings-header,
+  .earning-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .earning-date,
+  .earning-amount,
+  .earning-description {
+    text-align: left;
+    width: 100%;
+  }
+
+  .earning-date::before {
+    content: "Fecha: ";
+    font-weight: bold;
+  }
+
+  .earning-amount::before {
+    content: "Monto: ";
+    font-weight: bold;
+  }
+
+  .earning-description::before {
+    content: "Descripción: ";
+    font-weight: bold;
+  }
+}

@@ -15,3 +15,15 @@
   display: inline-block; /* Ensure it stays next to the logo */
   vertical-align: middle; /* Align it vertically with the logo */
 }
+
+.logo {
+  height: 30px;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .logo {
+    height: 20px; /* Adjust the height for mobile */
+    /*content: url("https://garbrix.com/regalame/assets/images/icon.png"); /* Change the image for mobile */
+  }
+}

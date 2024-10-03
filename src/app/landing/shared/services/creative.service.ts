@@ -13,6 +13,7 @@ export class CreativeService {
   public GET_PAYMENTS_BY_USER_ID = `${DOMAIN}/getPaymentsByUserId.php`;
   public GET_USER_CATEGORIES = `${DOMAIN}/getUserCategories.php`;
   public UPDATE_USER_BY_ID = `${DOMAIN}/updateUserByUserId.php`;
+  public UPDATE_USER_PAYMENT_BY_ID = `${DOMAIN}/updateUserPaymentByUserId.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -117,6 +118,26 @@ export class CreativeService {
         last_name: last_name,
         phone: phone,
         categories: categories,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public updateUserPaymentByUserId(
+    id_user: number,
+    id_users_payment_type: number,
+    value: string,
+    place: string
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.UPDATE_USER_PAYMENT_BY_ID, {
+        id_user: id_user,
+        id_users_payment_type: id_users_payment_type,
+        value: value,
+        place: place,
       })
       .pipe(
         map((response) => {

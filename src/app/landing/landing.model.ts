@@ -29,6 +29,7 @@ export interface UserModel {
   about: string;
   user_name: string;
   categories?: any;
+  paymentsTypes?: any;
 }
 
 export interface ExtrasModel {

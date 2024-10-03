@@ -262,6 +262,36 @@ export class LandingEffects {
     );
   });
 
+  updateUserPaymentByUserId$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.updateUserPaymentByUserId),
+      switchMap(({ paymentData }) => {
+        const { id_user, id_users_payment_type, value, place } = paymentData;
+        return this.creativeService
+          .updateUserPaymentByUserId(
+            id_user,
+            id_users_payment_type,
+            value,
+            place
+          )
+          .pipe(
+            map((response) => {
+              return LandingActions.updateUserPaymentByUserIdSuccess({
+                updateResponse: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.updateUserPaymentByUserIdFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

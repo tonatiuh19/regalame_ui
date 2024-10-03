@@ -19,6 +19,7 @@ import {
   faHandshake,
   faMusic,
   faLightbulb,
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -48,6 +49,7 @@ export class ProfileComponent implements OnInit {
   faHandshake = faHandshake;
   faMusic = faMusic;
   faLightbulb = faLightbulb;
+  faExclamationCircle = faExclamationCircle;
 
   iconMap: { [key: number]: any } = {
     1: faFilm,
@@ -70,7 +72,11 @@ export class ProfileComponent implements OnInit {
   public categoriesUser: any[] = [];
   selectedValues: any[] = [];
   public profileForm: FormGroup;
+  public paymentsTypeForm: FormGroup;
   public userId: number = 0;
+
+  noPaymentsTypes = false;
+  noProfileUpdated = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -80,6 +86,11 @@ export class ProfileComponent implements OnInit {
       apellido: ['', Validators.required],
       telefono: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       categories: [[], Validators.required],
+    });
+
+    this.paymentsTypeForm = this.fb.group({
+      place: ['', Validators.required],
+      value: ['', Validators.required],
     });
   }
 
@@ -116,6 +127,16 @@ export class ProfileComponent implements OnInit {
               }
             });
           });
+
+          this.noProfileUpdated = true;
+        } else {
+          this.noProfileUpdated = false;
+        }
+
+        if (state.user?.paymentsTypes) {
+          this.noPaymentsTypes = true;
+        } else {
+          this.noPaymentsTypes = false;
         }
       });
 
@@ -160,6 +181,23 @@ export class ProfileComponent implements OnInit {
       );
     } else {
       this.profileForm.markAllAsTouched();
+    }
+  }
+
+  updatePaymentsType() {
+    if (this.paymentsTypeForm.valid) {
+      this.store.dispatch(
+        LandingActions.updateUserPaymentByUserId({
+          paymentData: {
+            id_user: this.userId,
+            id_users_payment_type: 2,
+            value: this.paymentsTypeForm.get('value')?.value,
+            place: this.paymentsTypeForm.get('place')?.value,
+          },
+        })
+      );
+    } else {
+      this.paymentsTypeForm.markAllAsTouched();
     }
   }
 }

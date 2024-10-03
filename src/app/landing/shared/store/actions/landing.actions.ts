@@ -138,3 +138,18 @@ export const updateUserByUserIdFailure = createAction(
   `${actor} Update User By User Id Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const updateUserPaymentByUserId = createAction(
+  `${actor} Update User Payment By User Id`,
+  props<{ paymentData: any }>()
+);
+
+export const updateUserPaymentByUserIdSuccess = createAction(
+  `${actor} Update User Payment By User Id Success`,
+  props<{ updateResponse: any }>()
+);
+
+export const updateUserPaymentByUserIdFailure = createAction(
+  `${actor} Update User Payment By User Id Failure`,
+  props<{ errorResponse: any }>()
+);

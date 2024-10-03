@@ -127,7 +127,6 @@ export class CreativeComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((extras: any) => {
           if (extras !== 0) {
-            console.log(extras);
             this.isCreativePage = true;
             this.mainExtra = extras.extras.find(
               (extra: any) => extra.active === 4
@@ -142,9 +141,6 @@ export class CreativeComponent implements OnInit {
           this.isCreativePageChange.emit(this.isCreativePage);
         });
     }
-
-    console.log(this.userId);
-
     this.pricing = this.mainExtra.price;
 
     this.selectPaymentSuccess$
@@ -267,8 +263,6 @@ export class CreativeComponent implements OnInit {
           token: data.id,
         };
 
-        console.log(this.paymentForm);
-
         this.store.dispatch(
           LandingActions.paying({
             paymentData: {
@@ -279,14 +273,14 @@ export class CreativeComponent implements OnInit {
         this.store.dispatch(LandingActions.toogleLoading());
       },
       onCancel: (data: any, actions: any) => {
-        console.log('OnCancel', data, actions);
+        //console.log('OnCancel', data, actions);
         this.store.dispatch(LandingActions.toogleLoading());
       },
       onError: (err: any) => {
         console.log('OnError', err);
       },
       onClick: (data: any, actions: any) => {
-        console.log('onClick', data, actions);
+        //console.log('onClick', data, actions);
         this.store.dispatch(LandingActions.toogleLoading());
       },
     };
@@ -374,8 +368,6 @@ export class CreativeComponent implements OnInit {
             user_name: this.username,
             payment_type: 'stripe',
           };
-
-          console.log(this.paymentForm);
 
           this.store.dispatch(
             LandingActions.paying({

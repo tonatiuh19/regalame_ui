@@ -155,3 +155,18 @@ export const updateUserPaymentByUserIdFailure = createAction(
 );
 
 export const toogleLoading = createAction(`${actor} Toogle Loading`);
+
+export const insertVisitor = createAction(
+  `${actor} Insert Visitor`,
+  props<{ visitorData: any }>()
+);
+
+export const insertVisitorSuccess = createAction(
+  `${actor} Insert Visitor Success`,
+  props<{ visitorResponse: any }>()
+);
+
+export const insertVisitorFailure = createAction(
+  `${actor} Insert Visitor Failure`,
+  props<{ errorResponse: any }>()
+);

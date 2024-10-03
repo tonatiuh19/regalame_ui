@@ -10,6 +10,8 @@ import {
   faArrowRight,
   faArrowCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import { LandingActions } from '../shared/store/actions';
 
 @Component({
   selector: 'app-comitions',
@@ -33,7 +35,7 @@ export class ComitionsComponent implements OnInit {
   commission: number = 0;
   iva: number = 0;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.amount.setValue(this.amountValue);
@@ -42,6 +44,14 @@ export class ComitionsComponent implements OnInit {
       this.amountValue = values;
       this.earnings = this.calculateEarnings();
     });
+
+    this.store.dispatch(
+      LandingActions.insertVisitor({
+        visitorData: {
+          section: 'comitions',
+        },
+      })
+    );
   }
 
   calculateEarnings(): number {

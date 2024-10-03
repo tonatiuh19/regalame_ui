@@ -10,6 +10,7 @@ export class LandingService {
   public GET_USER_NAME_BY_USERNAME = `${DOMAIN}/getUserByUserName.php`;
   public GET_LOGIN = `${DOMAIN}/getLogin.php`;
   public SET_USER_NAME = `${DOMAIN}/setUserName.php`;
+  public INSERT_VISITOR = `${DOMAIN}/insertVisitor.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -54,6 +55,18 @@ export class LandingService {
       .post(this.SET_USER_NAME, {
         id_user: id_user,
         userUserName: userName,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public insertVisitor(section: string): Observable<any> {
+    return this.httpClient
+      .post(this.INSERT_VISITOR, {
+        section: section,
       })
       .pipe(
         map((response) => {

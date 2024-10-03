@@ -293,6 +293,25 @@ export class LandingEffects {
     );
   });
 
+  insertVisitor$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(LandingActions.insertVisitor),
+        switchMap(({ visitorData }) => {
+          return this.landingService.insertVisitor(visitorData.section).pipe(
+            map((response) => {
+              return of(1);
+            }),
+            catchError((error) => {
+              return of(1);
+            })
+          );
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private store: Store,

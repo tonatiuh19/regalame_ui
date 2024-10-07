@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   public isLogged = false;
 
   public user: any = {};
-  public isPayments = false;
+  public isPayments = true;
   public isNotUserName = false;
 
   faUserCircle = faUserCircle;
@@ -53,9 +53,9 @@ export class HeaderComponent implements OnInit {
           this.isNotUserName = true;
         }
 
-        if ((state.payments ?? []).length > 0) {
+        /* if ((state.payments ?? []).length > 0) {
           this.isPayments = true;
-        }
+        }*/
       });
 
     this.auth.user$.subscribe((profile) => {

@@ -45,8 +45,8 @@ export class LandingEffects {
           return this.landingService
             .authenticateUser(
               landingEntity.user.email,
-              landingEntity.user.given_name,
-              landingEntity.user.family_name,
+              landingEntity.user.given_name ?? '',
+              landingEntity.user.family_name ?? '',
               landingUser.checkingUser?.userNameInput ?? '',
               landingEntity.user.picture,
               landingEntity.user.email_verified

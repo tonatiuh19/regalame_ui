@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   faArrowRight,
@@ -21,8 +28,9 @@ import { ExtrasModel } from './landing.model';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, AfterViewInit {
   @ViewChild('modal') modal!: ModalSignComponent;
+  @ViewChild('quote') quote!: ElementRef<HTMLButtonElement>;
 
   public selectLandingState$ = this.store.select(
     fromLanding.selectLandingState
@@ -70,8 +78,6 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.typeQuote();
-
     this.auth.user$.subscribe((profile) => {
       if (profile) {
         this.store.dispatch(
@@ -123,21 +129,25 @@ export class LandingComponent implements OnInit {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.typeQuote();
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
   typeQuote() {
-    const quoteElement = document.getElementById('quote');
+    const quoteElement = this.quote;
     if (quoteElement) {
-      quoteElement.textContent = '';
+      quoteElement.nativeElement.textContent = '';
       const quote = this.quotes[this.currentQuoteIndex];
       let charIndex = 0;
 
       const typeInterval = setInterval(() => {
         if (charIndex < quote.length) {
-          quoteElement.textContent += quote.charAt(charIndex);
+          quoteElement.nativeElement.textContent += quote.charAt(charIndex);
           charIndex++;
         } else {
           clearInterval(typeInterval);

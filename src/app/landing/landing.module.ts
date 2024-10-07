@@ -38,8 +38,8 @@ import { PrivacyTermsModule } from './privacy-terms/privacy-terms.module';
     TermsAndConditionsModule,
     PrivacyTermsModule,
     AuthModule.forRoot({
-      domain: 'dev-awc4vpkkzroxivyw.us.auth0.com',
-      clientId: 'le6E7j4Rg4rkNZGoMJrlehW7KZPGQilA',
+      domain: 'dev-iud3r12souls8ali.us.auth0.com',
+      clientId: 'ORVoFxKWZuyHf24G9nzbsgUwdPr7GtYz',
       authorizationParams: {
         redirect_uri: window.location.origin,
         ui_locales: 'es',

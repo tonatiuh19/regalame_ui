@@ -60,7 +60,7 @@ export class EarningsComponent implements OnInit {
           (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
         ),
         switchMap((state: any) => {
-          if (Array.isArray(state.payments) && state.payments.length === 0) {
+          if (state.payments.length === 0) {
             this.store.dispatch(
               LandingActions.getPaymentsByUserId({ userId: state.user.id_user })
             );
@@ -69,15 +69,14 @@ export class EarningsComponent implements OnInit {
         })
       )
       .subscribe((state: any) => {
-        if (Array.isArray(state.payments) && state.payments.length === 0) {
+        if (state.payments.length === 0) {
           this.isEmpty = true;
         } else {
           this.isEmpty = false;
           this.earnings = state.payments;
+          this.updatePaginatedReviews();
         }
       });
-
-    this.updatePaginatedReviews();
   }
 
   ngOnDestroy(): void {

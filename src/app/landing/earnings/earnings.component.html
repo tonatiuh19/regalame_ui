@@ -22,7 +22,10 @@
               <div class="earning-amount">{{ earning.amount | currency }}</div>
               <div class="earning-description">
                 <strong>{{ getProcessedText(earning.payment_name) }}</strong
-                >: "{{ getProcessedText(earning.note_fan) }}"
+                >:
+                <span *ngIf="earning.note_fan !== ''"
+                  >"{{ getProcessedText(earning.note_fan) }}"</span
+                >
                 <span
                   *ngIf="earning.isPublic_note_fan == 0"
                   class="badge text-bg-warning"

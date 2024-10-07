@@ -94,11 +94,14 @@ export const LandingReducer = createRehydrateReducer(
   on(LandingActions.setUserName, (state: LandingState) => {
     return {
       ...state,
+      isLoading: true,
     };
   }),
   on(LandingActions.setUserNameSuccess, (state: any) => {
     return {
       ...state,
+      isLoading: false,
+      isError: false,
       user: {
         ...state.user,
         user_name: state.checkingUser?.userNameInput,
@@ -110,11 +113,13 @@ export const LandingReducer = createRehydrateReducer(
     (state: LandingState, { errorResponse }) => {
       return {
         ...state,
+
         checkingUser: {
           userName: '',
           isLoading: false,
         },
         isError: true,
+        isLoading: false,
       };
     }
   ),

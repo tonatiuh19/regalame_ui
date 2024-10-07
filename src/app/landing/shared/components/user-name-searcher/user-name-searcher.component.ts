@@ -10,7 +10,7 @@ import { LandingActions } from '../../store/actions';
   styleUrl: './user-name-searcher.component.css',
 })
 export class UserNameSearcherComponent implements OnInit {
-  @Input() buttonText = 'Crear';
+  @Input() buttonText = 'Empezar';
   @Input() isMain = true;
   @Input() uniqueId: string = '';
   @Output() buttonClicked = new EventEmitter<void>();
@@ -65,7 +65,17 @@ export class UserNameSearcherComponent implements OnInit {
   }
 
   onKeyup(event: KeyboardEvent): void {
-    this.userNameInput = (event.target as HTMLInputElement).value;
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+
+    // Remove spaces and convert to lowercase
+    value = value.replace(/\s+/g, '').toLowerCase();
+
+    // Update the input field with the modified value
+    input.value = value;
+
+    // Update the userNameInput and dispatch the action
+    this.userNameInput = value;
     this.store.dispatch(
       LandingActions.getUserName({
         username: this.userNameInput,

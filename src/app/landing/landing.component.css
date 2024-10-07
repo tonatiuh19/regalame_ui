@@ -73,3 +73,9 @@
   display: inline-block;
   animation: bump 0.9s infinite;
 }
+
+.link-container {
+  display: flex;
+  align-items: center;
+  height: 100%; /* Adjust this value as needed */
+}

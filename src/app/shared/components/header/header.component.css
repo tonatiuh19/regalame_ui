@@ -27,3 +27,7 @@
     /*content: url("https://garbrix.com/regalame/assets/images/icon.png"); /* Change the image for mobile */
   }
 }
+
+.hidden-button-username-modal {
+  display: none;
+}

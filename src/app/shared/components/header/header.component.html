@@ -74,7 +74,16 @@
       <a *ngIf="false" class="btn btn-sm order-1-0 me-1">
         Explorar creadores
       </a>
-      <a class="btn btn-sm order-1-0 me-1" (click)="logOut()"> Comisiones </a>
+      <a class="btn btn-sm order-1-0 me-1" (click)="goToComitions()">
+        Comisiones
+      </a>
+      <a
+        *ngIf="isLogged"
+        class="btn btn-sm order-1-0 me-1"
+        (click)="goToMypage()"
+      >
+        Mi pagina
+      </a>
       <button
         *ngIf="!isLogged"
         class="btn btn-sm btn-outline-dark me-1 order-0"
@@ -125,4 +134,42 @@
     </div>
   </div>
 </nav>
-<app-modal-sign #modal></app-modal-sign>
+<!-- Button trigger modal -->
+<button
+  #userNameModal
+  type="button"
+  class="btn btn-primary hidden-button-username-modal"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdrop"
+>
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button
+          #userNameModalClose
+          type="button"
+          class="btn-close hidden-button-username-modal"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+        <h5>Ingresa tu nombre de usuario:</h5>
+        <app-user-name-searcher
+          (buttonClicked)="handleButtonClick()"
+        ></app-user-name-searcher>
+      </div>
+    </div>
+  </div>
+</div>

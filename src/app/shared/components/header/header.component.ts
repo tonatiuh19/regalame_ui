@@ -1,5 +1,8 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   HostListener,
   Input,
   OnInit,
@@ -19,13 +22,17 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
-  @ViewChild('modal') modal!: ModalSignComponent;
+export class HeaderComponent implements OnInit, AfterViewInit {
+  @ViewChild('userNameModal') userNameModal!: ElementRef<HTMLButtonElement>;
+  @ViewChild('userNameModalClose')
+  userNameModalClose!: ElementRef<HTMLButtonElement>;
   @Input() isMain = true;
 
   public selectLandingState$ = this.store.select(
     fromLanding.selectLandingState
   );
+
+  username: string = '';
 
   public isLogged = false;
 
@@ -40,7 +47,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private store: Store,
     public auth: AuthService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +57,13 @@ export class HeaderComponent implements OnInit {
       .subscribe((state) => {
         this.user = state.user;
         this.isLogged = !!(state.user && this.user.id_user !== 0);
+
+        console.log(this.user);
         if (this.user.user_name === '') {
           this.isNotUserName = true;
+        } else {
+          this.username = this.user.user_name;
         }
-
         /* if ((state.payments ?? []).length > 0) {
           this.isPayments = true;
         }*/
@@ -72,11 +83,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // The modal reference is now available
     if (this.isNotUserName && this.isLogged) {
-      this.modal.open();
+      this.openModal();
     } else {
-      this.modal.close();
+      this.closeModal();
     }
   }
 
@@ -108,6 +118,25 @@ export class HeaderComponent implements OnInit {
 
   goToProfile(): void {
     this.router.navigate(['miperfil']);
+  }
+
+  openModal(): void {
+    this.userNameModal.nativeElement.click();
+  }
+
+  closeModal(): void {
+    this.userNameModalClose.nativeElement.click();
+  }
+
+  handleButtonClick(): void {
+    this.store.dispatch(LandingActions.setUserName());
+    this.closeModal();
+    this.router.navigate(['miperfil']);
+  }
+
+  goToMypage(): void {
+    console.log('go to my page', this.username);
+    this.router.navigate([this.username]);
   }
 
   @HostListener('window:scroll', [])

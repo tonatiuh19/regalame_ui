@@ -42,7 +42,7 @@ import { PrivacyTermsModule } from './privacy-terms/privacy-terms.module';
       clientId: 'ORVoFxKWZuyHf24G9nzbsgUwdPr7GtYz',
       authorizationParams: {
         redirect_uri: window.location.origin,
-        ui_locales: 'es',
+        ui_locales: 'es-MX',
       },
     }),
   ],

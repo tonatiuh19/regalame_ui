@@ -94,6 +94,8 @@ export class CreativeComponent implements OnInit {
   private elements: StripeElements | null = null;
   private card: StripeCardElement | null = null;
 
+  private isTesting = false;
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -126,6 +128,7 @@ export class CreativeComponent implements OnInit {
       this.selectExtras$
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((extras: any) => {
+          this.isTesting = extras.isTesting;
           if (extras !== 0) {
             this.isCreativePage = true;
             this.mainExtra = extras.extras.find(
@@ -192,8 +195,9 @@ export class CreativeComponent implements OnInit {
 
     this.payPalConfig = {
       currency: 'MXN',
-      clientId:
-        'AXZCEawZBotPezmoioG0Vw-Hqo8Tjuvh9rcYszUkQseaaTGIxfOViQb_o5XpMHcgYnOVie8dfA3EbrrT',
+      clientId: this.isTesting
+        ? 'AXZCEawZBotPezmoioG0Vw-Hqo8Tjuvh9rcYszUkQseaaTGIxfOViQb_o5XpMHcgYnOVie8dfA3EbrrT'
+        : 'AduKLhIOBz4_ftyU7Akn0dpfxb30QxTaK0x-CRju9_664dm7nqueSYRgh16FR3JWyC3ghLTh23_p-tn6',
       createOrder: (data: any) =>
         <ICreateOrderRequest>{
           intent: 'CAPTURE',
@@ -253,7 +257,7 @@ export class CreativeComponent implements OnInit {
           id_extra: this.mainExtra.id_extra,
           email_user: this.checkoutForm.value.email,
           amount: this.pricing,
-          description: this.mainExtra.title,
+          description: this.getProcessedText(this.mainExtra.confirmation),
           question_answer: '',
           payment_name: this.checkoutForm.value.fullName,
           note_fan: this.checkoutForm.value.message,
@@ -327,7 +331,7 @@ export class CreativeComponent implements OnInit {
         iconColor: '#dc3545',
       },
     };
-    this.stripe = await this.stripeService.getStripe();
+    this.stripe = await this.stripeService.getStripe(this.isTesting);
     if (this.stripe) {
       this.elements = this.stripe.elements({
         locale: 'es', // Set the locale to Spanish
@@ -339,6 +343,7 @@ export class CreativeComponent implements OnInit {
   }
 
   async handlePayment() {
+    this.isLoadingCheckout = true;
     if (this.paymentType === 'stripe') {
       if (!this.stripe || !this.card) {
         return;
@@ -360,7 +365,7 @@ export class CreativeComponent implements OnInit {
             id_extra: this.mainExtra.id_extra,
             email_user: this.checkoutForm.value.email,
             amount: this.pricing,
-            description: this.mainExtra.title,
+            description: this.getProcessedText(this.mainExtra.confirmation),
             question_answer: '',
             payment_name: this.checkoutForm.value.fullName,
             note_fan: this.checkoutForm.value.message,

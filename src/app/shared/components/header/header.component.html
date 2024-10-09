@@ -41,6 +41,7 @@
             <img
               *ngIf="isLogged"
               [src]="user.picture"
+              (error)="setDefaultPic($event)"
               alt="Profile"
               class="rounded-circle"
               width="30"
@@ -103,6 +104,7 @@
           <img
             *ngIf="isLogged"
             [src]="user.picture"
+            (error)="setDefaultPic($event)"
             alt="Profile"
             class="rounded-circle"
             width="30"

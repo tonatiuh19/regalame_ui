@@ -172,8 +172,14 @@
                   class="form-check-label small-colored-label"
                   for="flexCheckChecked"
                 >
-                  Acepto los términos y condiciones de uso y politicas de
-                  privacidad
+                  Acepto los
+                  <span class="hyperlink" (click)="goToTermsAndConditions()"
+                    >términos y condiciones de uso</span
+                  >
+                  y
+                  <span class="hyperlink" (click)="goToPrivacyTerms()"
+                    >politicas de privacidad</span
+                  >.
                 </label>
                 <div
                   *ngIf="

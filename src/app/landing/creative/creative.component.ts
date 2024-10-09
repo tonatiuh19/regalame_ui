@@ -437,4 +437,22 @@ export class CreativeComponent implements OnInit {
   setPaypal() {
     this.paymentType = 'paypal';
   }
+
+  goToTermsAndConditions() {
+    window.open(
+      this.router.serializeUrl(
+        this.router.createUrlTree(['terminosycondiciones'])
+      ),
+      '_blank'
+    );
+  }
+
+  goToPrivacyTerms() {
+    window.open(
+      this.router.serializeUrl(
+        this.router.createUrlTree(['avisodeprivacidad'])
+      ),
+      '_blank'
+    );
+  }
 }

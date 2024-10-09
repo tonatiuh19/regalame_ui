@@ -28,10 +28,7 @@ import { ExtrasModel } from './landing.model';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
-export class LandingComponent implements OnInit, AfterViewInit {
-  @ViewChild('modal') modal!: ModalSignComponent;
-  @ViewChild('quote') quote!: ElementRef<HTMLButtonElement>;
-
+export class LandingComponent implements OnInit {
   public selectLandingState$ = this.store.select(
     fromLanding.selectLandingState
   );
@@ -78,6 +75,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.typeQuote();
     this.auth.user$.subscribe((profile) => {
       if (profile) {
         this.store.dispatch(
@@ -127,12 +125,6 @@ export class LandingComponent implements OnInit, AfterViewInit {
         },
       })
     );
-
-    this.typeQuote();
-  }
-
-  ngAfterViewInit(): void {
-    //this.typeQuote();
   }
 
   ngOnDestroy(): void {
@@ -141,26 +133,31 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   typeQuote() {
-    const quoteElement = this.quote;
-    if (quoteElement) {
-      quoteElement.nativeElement.textContent = '';
-      const quote = this.quotes[this.currentQuoteIndex];
-      let charIndex = 0;
+    let quoteElement = document.querySelector('.typing-effect') as HTMLElement;
 
-      const typeInterval = setInterval(() => {
-        if (charIndex < quote.length) {
-          quoteElement.nativeElement.textContent += quote.charAt(charIndex);
-          charIndex++;
-        } else {
-          clearInterval(typeInterval);
-          setTimeout(() => {
-            this.currentQuoteIndex =
-              (this.currentQuoteIndex + 1) % this.quotes.length;
-            this.typeQuote();
-          }, 2000); // Pause before typing the next quote
-        }
-      }, 100); // Typing speed
+    if (!quoteElement) {
+      // Create and append the element if it doesn't exist
+      quoteElement = document.createElement('span');
+      quoteElement.classList.add('typing-effect');
+      document.body.appendChild(quoteElement); // Adjust the parent element as needed
     }
+    quoteElement.textContent = '';
+    const quote = this.quotes[this.currentQuoteIndex];
+    let charIndex = 0;
+
+    const typeInterval = setInterval(() => {
+      if (charIndex < quote.length) {
+        quoteElement.textContent += quote.charAt(charIndex);
+        charIndex++;
+      } else {
+        clearInterval(typeInterval);
+        setTimeout(() => {
+          this.currentQuoteIndex =
+            (this.currentQuoteIndex + 1) % this.quotes.length;
+          this.typeQuote();
+        }, 2000); // Pause before typing the next quote
+      }
+    }, 100); // Typing speed
   }
 
   handleButtonClick(): void {

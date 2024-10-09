@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.user = state.user;
         this.isLogged = !!(state.user && this.user.id_user !== 0);
 
-        console.log(this.user);
         if (this.user.user_name === '') {
           this.isNotUserName = true;
         } else {
@@ -135,7 +134,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   goToMypage(): void {
-    console.log('go to my page', this.username);
     this.router.navigate([this.username]);
   }
 

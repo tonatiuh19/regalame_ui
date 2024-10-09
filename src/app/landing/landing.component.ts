@@ -127,10 +127,12 @@ export class LandingComponent implements OnInit, AfterViewInit {
         },
       })
     );
+
+    this.typeQuote();
   }
 
   ngAfterViewInit(): void {
-    this.typeQuote();
+    //this.typeQuote();
   }
 
   ngOnDestroy(): void {

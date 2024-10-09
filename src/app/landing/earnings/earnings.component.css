@@ -1,5 +1,6 @@
 .main-container {
   padding-top: 10vh !important;
+  padding-bottom: 20vh !important;
   position: relative;
   background-size: cover;
   background-attachment: fixed; /* Fixed background image */
@@ -77,4 +78,15 @@
     content: "Descripción: ";
     font-weight: bold;
   }
+}
+
+.full-size-card {
+  height: 80vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

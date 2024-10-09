@@ -13,6 +13,7 @@ import {
   faXmark,
   faCheck,
   faExclamation,
+  faCashRegister,
 } from '@fortawesome/free-solid-svg-icons';
 import { LandingActions } from '../shared/store/actions';
 
@@ -31,6 +32,7 @@ export class EarningsComponent implements OnInit {
   faXmark = faXmark;
   faCheck = faCheck;
   faExclamation = faExclamation;
+  faCashRegister = faCashRegister;
 
   public idUser: string = '';
   public isEmpty: boolean = false;
@@ -54,21 +56,14 @@ export class EarningsComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectLandingState$
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        distinctUntilChanged(
-          (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
-        ),
-        switchMap((state: any) => {
-          if (state.payments.length === 0) {
-            this.store.dispatch(
-              LandingActions.getPaymentsByUserId({ userId: state.user.id_user })
-            );
-          }
-          return this.selectLandingState$.pipe(takeUntil(this.unsubscribe$));
-        })
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((state: any) => {
+        if (this.idUser !== state.user.id_user) {
+          this.idUser = state.user.id_user;
+          this.store.dispatch(
+            LandingActions.getPaymentsByUserId({ userId: this.idUser })
+          );
+        }
         if (state.payments.length === 0) {
           this.isEmpty = true;
         } else {

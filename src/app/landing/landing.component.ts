@@ -139,6 +139,7 @@ export class LandingComponent implements OnInit {
       // Create and append the element if it doesn't exist
       quoteElement = document.createElement('span');
       quoteElement.classList.add('typing-effect');
+      quoteElement.classList.add('d-none');
       document.body.appendChild(quoteElement); // Adjust the parent element as needed
     }
     quoteElement.textContent = '';

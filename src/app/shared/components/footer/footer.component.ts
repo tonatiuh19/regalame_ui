@@ -1,4 +1,11 @@
-import { Component } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,7 +17,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 export class FooterComponent {
   faHeart = faHeart;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private renderer: Renderer2) {}
 
   goToTermsAndConditions() {
     window.open(

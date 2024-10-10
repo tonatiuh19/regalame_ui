@@ -19,11 +19,22 @@
 
     <div class="d-sm-block d-md-none">
       <div class="text-center">
-        <button class="btn btn-outline-dark btn-sm" (click)="goToComitions()">
+        <button
+          *ngIf="!isUserInCreativePage"
+          class="btn btn-outline-dark btn-sm"
+          (click)="goToComitions()"
+        >
           Comisiones
         </button>
         <button
-          *ngIf="!isLogged"
+          *ngIf="isLogged && !isUserInCreativePage"
+          class="btn btn-outline-dark btn-sm ms-1"
+          (click)="goToMypage()"
+        >
+          <fa-icon [icon]="faNewspaper"></fa-icon>
+        </button>
+        <button
+          *ngIf="!isLogged && !isUserInCreativePage"
           class="btn btn-outline-dark btn-sm ms-1"
           (click)="login()"
         >
@@ -75,18 +86,22 @@
       <a *ngIf="false" class="btn btn-sm order-1-0 me-1">
         Explorar creadores
       </a>
-      <a class="btn btn-sm order-1-0 me-1" (click)="goToComitions()">
+      <a
+        *ngIf="!isUserInCreativePage"
+        class="btn btn-sm order-1-0 me-1"
+        (click)="goToComitions()"
+      >
         Comisiones
       </a>
       <a
-        *ngIf="isLogged"
+        *ngIf="isLogged && !isUserInCreativePage"
         class="btn btn-sm order-1-0 me-1"
         (click)="goToMypage()"
       >
         Mi pagina
       </a>
       <button
-        *ngIf="!isLogged"
+        *ngIf="!isLogged && !isUserInCreativePage"
         class="btn btn-sm btn-outline-dark me-1 order-0"
         (click)="login()"
       >

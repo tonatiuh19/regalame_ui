@@ -131,6 +131,7 @@ export class CreativeComponent implements OnInit {
           this.isTesting = extras.isTesting;
           if (extras !== 0) {
             this.isCreativePage = true;
+            this.store.dispatch(LandingActions.isInCreativePage());
             this.mainExtra = extras.extras.find(
               (extra: any) => extra.active === 4
             );
@@ -139,6 +140,7 @@ export class CreativeComponent implements OnInit {
             );
             this.userId = extras.id_user;
           } else {
+            this.store.dispatch(LandingActions.isNotInCreativePage());
             this.isCreativePage = false;
           }
           this.isCreativePageChange.emit(this.isCreativePage);
@@ -295,6 +297,7 @@ export class CreativeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(LandingActions.isNotInCreativePage());
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

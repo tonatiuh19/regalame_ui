@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faNewspaper } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { fromLanding } from '../../../landing/shared/store/selectors';
 import { LandingActions } from '../../../landing/shared/store/actions';
@@ -40,7 +40,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   public isPayments = true;
   public isNotUserName = false;
 
+  public isUserInCreativePage: boolean = false;
+
   faUserCircle = faUserCircle;
+  faNewspaper = faNewspaper;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -55,6 +58,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.selectLandingState$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((state) => {
+        this.isUserInCreativePage = state.isUserinCreativePage ?? false;
         this.user = state.user;
         this.isLogged = !!(state.user && this.user.id_user !== 0);
 

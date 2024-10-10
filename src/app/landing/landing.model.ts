@@ -6,7 +6,7 @@ export interface LandingState {
   payments?: PaymentsModel[];
   categories?: CategoriesModel[];
   paymentSuccess?: PaymentSuccessModel;
-  isUserinModalSign?: boolean;
+  isUserinCreativePage?: boolean;
   isLoading?: boolean;
   isError?: boolean;
 }

@@ -39,5 +39,5 @@ export const initialLandingState: LandingState = {
   payments: [],
   isLoading: false,
   isError: false,
-  isUserinModalSign: false,
+  isUserinCreativePage: false,
 };

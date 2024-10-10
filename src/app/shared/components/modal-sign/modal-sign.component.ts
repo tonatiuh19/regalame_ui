@@ -51,7 +51,6 @@ export class ModalSignComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(LandingActions.isSignOff());
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -65,7 +64,6 @@ export class ModalSignComponent implements OnInit {
   }
 
   close(): void {
-    this.store.dispatch(LandingActions.isSignOff());
     document.querySelector('.modal')?.classList.remove('show');
     setTimeout(() => {
       this.isVisible = false;

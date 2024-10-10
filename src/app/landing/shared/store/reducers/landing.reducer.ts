@@ -79,16 +79,16 @@ export const LandingReducer = createRehydrateReducer(
       ...initialLandingState,
     };
   }),
-  on(LandingActions.isSignIn, (state: LandingState) => {
+  on(LandingActions.isInCreativePage, (state: LandingState) => {
     return {
       ...state,
-      isUserinModalSign: true,
+      isUserinCreativePage: true,
     };
   }),
-  on(LandingActions.isSignOff, (state: any) => {
+  on(LandingActions.isNotInCreativePage, (state: any) => {
     return {
       ...state,
-      isUserinModalSign: false,
+      isUserinCreativePage: false,
     };
   }),
   on(LandingActions.setUserName, (state: LandingState) => {

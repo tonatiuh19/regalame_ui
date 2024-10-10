@@ -34,9 +34,11 @@ export const authenticateUserFailure = createAction(
 
 export const logoutUser = createAction(`${actor} Logout User`);
 
-export const isSignIn = createAction(`${actor} Is Sign In Modal`);
+export const isInCreativePage = createAction(`${actor} Is In Creative Page`);
 
-export const isSignOff = createAction(`${actor} Is Sign Off Modal`);
+export const isNotInCreativePage = createAction(
+  `${actor} Is Not In Creative Page`
+);
 
 export const setUserName = createAction(`${actor} Set User Name`);
 

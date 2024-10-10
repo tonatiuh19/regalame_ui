@@ -64,6 +64,11 @@
             aria-labelledby="dropdownMenuButton"
           >
             <li *ngIf="isPayments">
+              <button class="dropdown-item" (click)="goToMyExtras()">
+                Mis Extras
+              </button>
+            </li>
+            <li *ngIf="isPayments">
               <button class="dropdown-item" (click)="goToEarnings()">
                 Mis pagos
               </button>
@@ -92,6 +97,13 @@
         (click)="goToComitions()"
       >
         Comisiones
+      </a>
+      <a
+        *ngIf="isLogged && !isUserInCreativePage"
+        class="btn btn-sm order-1-0 me-1"
+        (click)="goToMyExtras()"
+      >
+        Mis extras
       </a>
       <a
         *ngIf="isLogged && !isUserInCreativePage"

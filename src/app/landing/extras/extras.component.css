@@ -33,6 +33,16 @@
   cursor: pointer;
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-container .card {
+  flex: 1 1 calc(33.333% - 1rem); /* Adjust the percentage as needed */
+  margin: 0.5rem;
+}
+
 @media (max-width: 767px) {
   :host ::ng-deep .p-sidebar {
     width: 90vw;

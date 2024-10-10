@@ -11,6 +11,7 @@ import { LoadingMaskModule } from '../../shared/components/loading-mask/loading-
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { ExtraFormModule } from './extra-form/extra-form.module';
 
 @NgModule({
   declarations: [ExtrasComponent],
@@ -26,6 +27,7 @@ import { ButtonModule } from 'primeng/button';
     DataViewModule,
     TagModule,
     ButtonModule,
+    ExtraFormModule,
   ],
   exports: [ExtrasComponent],
 })

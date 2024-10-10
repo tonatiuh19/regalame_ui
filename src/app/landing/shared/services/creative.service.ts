@@ -15,6 +15,8 @@ export class CreativeService {
   public UPDATE_USER_BY_ID = `${DOMAIN}/updateUserByUserId.php`;
   public UPDATE_USER_PAYMENT_BY_ID = `${DOMAIN}/updateUserPaymentByUserId.php`;
   public INSERT_NEW_EXTRA = `${DOMAIN}/insertNewExtra.php`;
+  public UPDATE_EXTRA = `${DOMAIN}/updateExtra.php`;
+  public DEACTIVATE_EXTRA = `${DOMAIN}/deActivateExtra.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -169,6 +171,46 @@ export class CreativeService {
         price: price,
         question: question,
         subsciption: subsciption,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public updateExtra(
+    id_extra: number,
+    title: string,
+    description: string,
+    confirmation: string,
+    limit_slots: number,
+    price: number,
+    question: string,
+    subsciption: boolean
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.UPDATE_EXTRA, {
+        id_extra: id_extra,
+        title: title,
+        description: description,
+        confirmation: confirmation,
+        limit_slots: limit_slots,
+        price: price,
+        question: question,
+        subsciption: subsciption,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public deActivateExtra(id_extra: number): Observable<any> {
+    return this.httpClient
+      .post(this.DEACTIVATE_EXTRA, {
+        id_extra: id_extra,
       })
       .pipe(
         map((response) => {

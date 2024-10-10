@@ -32,12 +32,17 @@
           >Agrega un extra a tus ganancias.</span
         >
       </div>
+      <div class="col-12 text-center my-2">
+        <button class="btn btn-dark" (click)="onEditPage()">
+          <fa-icon [icon]="faPlusCircle"></fa-icon> Agregar Extra
+        </button>
+      </div>
     </div>
     <div class="row mt-3">
       <div class="col-sm-12">
         <div class="row">
-          <div class="col-sm-6" *ngFor="let item of extras">
-            <div class="card m-1">
+          <div class="col-sm-6 p-1" *ngFor="let item of extras">
+            <div class="card h-100">
               <div class="card-body">
                 <div class="row h-100">
                   <div
@@ -63,16 +68,29 @@
                           >Pendiente de revisión</span
                         >
                         <span
+                          *ngIf="item.active === 3"
+                          class="badge text-bg-success m-1"
+                          >Activo</span
+                        >
+                        <span
                           *ngIf="item.subsciption === 1"
                           class="badge text-bg-warning m-1"
                           >Suscripción</span
                         >
                       </div>
                       <div class="col-sm-12">
-                        <button class="btn btn-outline-primary m-1 btn-sm">
+                        <button
+                          class="btn btn-outline-primary m-1 btn-sm"
+                          (click)="onEditExtra(item)"
+                        >
                           Editar
                         </button>
-                        <button class="btn btn-outline-danger m-1 btn-sm">
+                        <button
+                          class="btn btn-outline-danger m-1 btn-sm"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deactivateModal"
+                          (click)="setDeactivateExtra(item.id_extra)"
+                        >
                           Desactivar
                         </button>
                       </div>
@@ -89,157 +107,51 @@
 </section>
 <app-footer></app-footer>
 <p-sidebar [(visible)]="isPanelVisible" position="right" class="custom-sidebar">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 my-3">
-        <h3>
-          {{ panelTitle }}
-          <button
-            class="btn btn-outline-dark btn-sm float-end"
-            (click)="onClosePanel()"
-          >
-            <fa-icon [icon]="faXmark"></fa-icon>
-          </button>
-        </h3>
+  <app-extra-form
+    [panelTitle]="panelTitle"
+    [extraForm]="extraForm"
+    [isLimitOfUsers]="isLimitOfUsers"
+    [panelButton]="panelButton"
+    (closePanel)="onClosePanel()"
+    (submitExtra)="onSubmitExtra()"
+    (goToTermsAndConditions)="goToTermsAndConditions()"
+  ></app-extra-form>
+</p-sidebar>
+<div
+  class="modal fade"
+  id="deactivateModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          ¿Estas seguro de desactivar este extra?
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Me equivoqué
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="onDeactivateExtra()"
+        >
+          Desactivar
+        </button>
       </div>
     </div>
-    <div class="row">
-      <form [formGroup]="extraForm" (ngSubmit)="onSubmitExtra()">
-        <div class="col-sm-12">
-          <div class="mb-3">
-            <label class="form-label label-edit-strong"
-              >¿Cual es el nombre de tu Extra?</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="title"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('title')?.invalid &&
-                  extraForm.get('title')?.touched
-              }"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label label-edit-strong"
-              >Precio de tu Extra</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              formControlName="price"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('price')?.invalid &&
-                  extraForm.get('price')?.touched
-              }"
-            />
-          </div>
-          <div class="mb-3">
-            <div class="form-check form-switch my-2">
-              <label class="form-check-label" for="flexSwitchCheckDefault"
-                >¿Es una suscripción?</label
-              >
-              <input
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-                formControlName="subsciption"
-              />
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="form-check form-switch my-2">
-              <label class="form-check-label" for="flexSwitchCheckDefault"
-                >¿Tiene limite de usuarios?</label
-              >
-              <input
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-                formControlName="isLimit"
-              />
-            </div>
-          </div>
-          <div *ngIf="isLimitOfUsers" class="mb-3">
-            <label class="form-label label-edit-strong"
-              >¿Cual es el limite de usuarios?</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              formControlName="limit"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('limit')?.invalid &&
-                  extraForm.get('limit')?.touched
-              }"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label label-edit-strong"
-              >¿Cual es la descripción de tu Extra?</label
-            >
-            <textarea
-              class="form-control no-rezie-text-area"
-              formControlName="description"
-              rows="3"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('description')?.invalid &&
-                  extraForm.get('description')?.touched
-              }"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label label-edit-strong"
-              >Este mensaje le llegara a tu fan una vez haya adquirido tu
-              extra:</label
-            >
-            <textarea
-              class="form-control no-rezie-text-area"
-              formControlName="confirmation"
-              rows="3"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('confirmation')?.invalid &&
-                  extraForm.get('confirmation')?.touched
-              }"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label label-edit-strong"
-              >¿Que necesitas preguntarle a tu fan?</label
-            >
-            <textarea
-              class="form-control no-rezie-text-area"
-              formControlName="question"
-              rows="3"
-              [ngClass]="{
-                'is-invalid':
-                  extraForm.get('question')?.invalid &&
-                  extraForm.get('question')?.touched
-              }"
-            ></textarea>
-          </div>
-        </div>
-        <div class="col-sm-12 mt-2">
-          <button type="submit" class="btn btn-success w-100">Crear</button>
-        </div>
-        <div class="col-sm-12 text-center mt-1 pb-4">
-          <small class="text-muted"
-            >Recuerda ser claro y conciso en la descripción de tu extra. Una vez
-            creado, será enviado a revisión para que pueda ser visible en tu
-            página en base a nuestros
-            <span class="hyperlink" (click)="goToTermsAndConditions()"
-              >términos y condiciones</span
-            >.</small
-          >
-        </div>
-      </form>
-    </div>
   </div>
-</p-sidebar>
+</div>

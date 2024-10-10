@@ -138,6 +138,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.router.navigate([this.username]);
   }
 
+  goToMyExtras(): void {
+    this.router.navigate(['misextras']);
+  }
+
   setDefaultPic(event: Event) {
     (event.target as HTMLImageElement).src =
       'https://garbrix.com/regalame/assets/images/user_default.png';

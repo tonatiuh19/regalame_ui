@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 my-3">
+      <h3>
+        {{ panelTitle }}
+        <button
+          class="btn btn-outline-dark btn-sm float-end"
+          (click)="onClosePanel()"
+        >
+          <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <form [formGroup]="extraForm" (ngSubmit)="onSubmitExtra()">
+      <div class="col-sm-12">
+        <div class="mb-3">
+          <label class="form-label label-edit-strong"
+            >¿Cual es el nombre de tu Extra?</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('title')?.invalid &&
+                extraForm.get('title')?.touched
+            }"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label label-edit-strong">Precio de tu Extra</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="price"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('price')?.invalid &&
+                extraForm.get('price')?.touched
+            }"
+          />
+        </div>
+        <div class="mb-3">
+          <div class="form-check form-switch my-2">
+            <label class="form-check-label" for="flexSwitchCheckDefault"
+              >¿Es una suscripción?</label
+            >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+              formControlName="subsciption"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="form-check form-switch my-2">
+            <label class="form-check-label" for="flexSwitchCheckDefault"
+              >¿Tiene limite de usuarios?</label
+            >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+              formControlName="isLimit"
+            />
+          </div>
+        </div>
+        <div *ngIf="isLimitOfUsers" class="mb-3">
+          <label class="form-label label-edit-strong"
+            >¿Cual es el limite de usuarios?</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            formControlName="limit"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('limit')?.invalid &&
+                extraForm.get('limit')?.touched
+            }"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label label-edit-strong"
+            >¿Cual es la descripción de tu Extra?</label
+          >
+          <textarea
+            class="form-control no-rezie-text-area"
+            formControlName="description"
+            rows="3"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('description')?.invalid &&
+                extraForm.get('description')?.touched
+            }"
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label label-edit-strong"
+            >Este mensaje le llegara a tu fan una vez haya adquirido tu
+            extra:</label
+          >
+          <textarea
+            class="form-control no-rezie-text-area"
+            formControlName="confirmation"
+            rows="3"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('confirmation')?.invalid &&
+                extraForm.get('confirmation')?.touched
+            }"
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label label-edit-strong"
+            >¿Que necesitas preguntarle a tu fan?</label
+          >
+          <textarea
+            class="form-control no-rezie-text-area"
+            formControlName="question"
+            rows="3"
+            [ngClass]="{
+              'is-invalid':
+                extraForm.get('question')?.invalid &&
+                extraForm.get('question')?.touched
+            }"
+          ></textarea>
+        </div>
+      </div>
+      <div class="col-sm-12 mt-2">
+        <button type="submit" class="btn btn-success w-100">
+          {{ panelButton }}
+        </button>
+      </div>
+      <div class="col-sm-12 text-center mt-1 pb-4">
+        <small class="text-muted"
+          >Recuerda ser claro y conciso en la descripción de tu extra. Una vez
+          creado, será enviado a revisión para que pueda ser visible en tu
+          página en base a nuestros
+          <span class="hyperlink" (click)="goToTermsAndConditionsFunc()"
+            >términos y condiciones</span
+          >.</small
+        >
+      </div>
+    </form>
+  </div>
+</div>

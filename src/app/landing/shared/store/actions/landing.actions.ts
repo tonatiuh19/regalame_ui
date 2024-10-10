@@ -187,3 +187,33 @@ export const insertNewExtraFailure = createAction(
   `${actor} Insert New Extra Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const updateExtra = createAction(
+  `${actor} Update Extra`,
+  props<{ extraData: any }>()
+);
+
+export const updateExtraSuccess = createAction(
+  `${actor} Update Extra Success`,
+  props<{ updateResponse: any }>()
+);
+
+export const updateExtraFailure = createAction(
+  `${actor} Update Extra Failure`,
+  props<{ errorResponse: any }>()
+);
+
+export const deactivateExtra = createAction(
+  `${actor} Deactivate Extra`,
+  props<{ extraId: any }>()
+);
+
+export const deactivateExtraSuccess = createAction(
+  `${actor} Deactivate Extra Success`,
+  props<{ deactivateResponse: any }>()
+);
+
+export const deactivateExtraFailure = createAction(
+  `${actor} Deactivate Extra Failure`,
+  props<{ errorResponse: any }>()
+);

@@ -317,7 +317,6 @@ export class LandingEffects {
       return this.actions$.pipe(
         ofType(LandingActions.insertNewExtra),
         switchMap(({ extraData }) => {
-          console.log(extraData);
           //return of(1);
           return this.creativeService
             .insertNewExtra(
@@ -351,6 +350,110 @@ export class LandingEffects {
   insertNewExtraSuccess$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LandingActions.insertNewExtraSuccess),
+      withLatestFrom(this.store.select(fromLanding.selectUser)),
+      switchMap(([, user]) => {
+        return this.creativeService
+          .getExtrasByUserName(user?.user_name ?? '')
+          .pipe(
+            map((response) => {
+              return LandingActions.getExtrasByUserNameSuccess({
+                extras: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.getExtrasByUserNameFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
+  updateExtra$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(LandingActions.updateExtra),
+        switchMap(({ extraData }) => {
+          return this.creativeService
+            .updateExtra(
+              extraData.id_extra,
+              extraData.title,
+              extraData.description,
+              extraData.confirmation,
+              extraData.limit_slots,
+              extraData.price,
+              extraData.question,
+              extraData.subsciption
+            )
+            .pipe(
+              map((response) => {
+                return LandingActions.updateExtraSuccess({
+                  updateResponse: response,
+                });
+              }),
+              catchError((error) => {
+                return of(
+                  LandingActions.updateExtraFailure({ errorResponse: error })
+                );
+              })
+            );
+        })
+      );
+    }
+    //{ dispatch: false }
+  );
+
+  updateExtraSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.updateExtraSuccess),
+      withLatestFrom(this.store.select(fromLanding.selectUser)),
+      switchMap(([, user]) => {
+        return this.creativeService
+          .getExtrasByUserName(user?.user_name ?? '')
+          .pipe(
+            map((response) => {
+              return LandingActions.getExtrasByUserNameSuccess({
+                extras: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.getExtrasByUserNameFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
+  deactivateExtra$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.deactivateExtra),
+      switchMap(({ extraId }) => {
+        return this.creativeService.deActivateExtra(extraId.id_extra).pipe(
+          map((response) => {
+            return LandingActions.deactivateExtraSuccess({
+              deactivateResponse: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.deactivateExtraFailure({ errorResponse: error })
+            );
+          })
+        );
+      })
+    );
+  });
+
+  deactivateExtraSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.deactivateExtraSuccess),
       withLatestFrom(this.store.select(fromLanding.selectUser)),
       switchMap(([, user]) => {
         return this.creativeService

@@ -14,6 +14,7 @@ export class CreativeService {
   public GET_USER_CATEGORIES = `${DOMAIN}/getUserCategories.php`;
   public UPDATE_USER_BY_ID = `${DOMAIN}/updateUserByUserId.php`;
   public UPDATE_USER_PAYMENT_BY_ID = `${DOMAIN}/updateUserPaymentByUserId.php`;
+  public INSERT_NEW_EXTRA = `${DOMAIN}/insertNewExtra.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -140,6 +141,34 @@ export class CreativeService {
         id_users_payment_type: id_users_payment_type,
         value: value,
         place: place,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public insertNewExtra(
+    id_user: number,
+    title: string,
+    description: string,
+    confirmation: string,
+    limit_slots: number,
+    price: number,
+    question: string,
+    subsciption: boolean
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.INSERT_NEW_EXTRA, {
+        id_user: id_user,
+        title: title,
+        description: description,
+        confirmation: confirmation,
+        limit_slots: limit_slots,
+        price: price,
+        question: question,
+        subsciption: subsciption,
       })
       .pipe(
         map((response) => {

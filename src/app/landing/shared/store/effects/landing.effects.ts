@@ -312,6 +312,67 @@ export class LandingEffects {
     { dispatch: false }
   );
 
+  insertNewExtra$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(LandingActions.insertNewExtra),
+        switchMap(({ extraData }) => {
+          console.log(extraData);
+          //return of(1);
+          return this.creativeService
+            .insertNewExtra(
+              extraData.id_user,
+              extraData.title,
+              extraData.description,
+              extraData.confirmation,
+              extraData.limit_slots,
+              extraData.price,
+              extraData.question,
+              extraData.subsciption
+            )
+            .pipe(
+              map((response) => {
+                return LandingActions.insertNewExtraSuccess({
+                  insertResponse: response,
+                });
+              }),
+              catchError((error) => {
+                return of(
+                  LandingActions.insertNewExtraFailure({ errorResponse: error })
+                );
+              })
+            );
+        })
+      );
+    }
+    //{ dispatch: false }
+  );
+
+  insertNewExtraSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.insertNewExtraSuccess),
+      withLatestFrom(this.store.select(fromLanding.selectUser)),
+      switchMap(([, user]) => {
+        return this.creativeService
+          .getExtrasByUserName(user?.user_name ?? '')
+          .pipe(
+            map((response) => {
+              return LandingActions.getExtrasByUserNameSuccess({
+                extras: response,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.getExtrasByUserNameFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

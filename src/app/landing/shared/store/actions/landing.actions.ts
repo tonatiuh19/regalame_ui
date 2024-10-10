@@ -172,3 +172,18 @@ export const insertVisitorFailure = createAction(
   `${actor} Insert Visitor Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const insertNewExtra = createAction(
+  `${actor} Insert New Extra`,
+  props<{ extraData: any }>()
+);
+
+export const insertNewExtraSuccess = createAction(
+  `${actor} Insert New Extra Success`,
+  props<{ insertResponse: any }>()
+);
+
+export const insertNewExtraFailure = createAction(
+  `${actor} Insert New Extra Failure`,
+  props<{ errorResponse: any }>()
+);

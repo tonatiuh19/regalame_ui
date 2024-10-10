@@ -1,0 +1,40 @@
+.main-container {
+  position: relative;
+  background-size: cover;
+  background-attachment: fixed; /* Fixed background image */
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-container-with-extras {
+  padding-top: 15vh !important;
+  padding-bottom: 20vh !important;
+  position: relative;
+  background-size: cover;
+  background-attachment: fixed; /* Fixed background image */
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-sidebar {
+  width: 50vw;
+  background-color: #ffffff;
+  border-left: 1px solid #ffffff;
+  border-top-left-radius: 1.375rem;
+  border-bottom-left-radius: 1.375rem;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Add shadow to the left */
+}
+
+:host ::ng-deep .p-sidebar-close {
+  display: none;
+}
+
+.hyperlink {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  :host ::ng-deep .p-sidebar {
+    width: 90vw;
+  }
+}

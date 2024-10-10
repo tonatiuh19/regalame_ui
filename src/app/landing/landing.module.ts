@@ -17,6 +17,7 @@ import { EarningsModule } from './earnings/earnings.module';
 import { ProfileModule } from './profile/profile.module';
 import { TermsAndConditionsModule } from './terms-and-conditions/terms-and-conditions.module';
 import { PrivacyTermsModule } from './privacy-terms/privacy-terms.module';
+import { ExtrasModule } from './extras/extras.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -37,6 +38,7 @@ import { PrivacyTermsModule } from './privacy-terms/privacy-terms.module';
     ProfileModule,
     TermsAndConditionsModule,
     PrivacyTermsModule,
+    ExtrasModule,
     AuthModule.forRoot({
       domain: 'dev-iud3r12souls8ali.us.auth0.com',
       clientId: 'ORVoFxKWZuyHf24G9nzbsgUwdPr7GtYz',

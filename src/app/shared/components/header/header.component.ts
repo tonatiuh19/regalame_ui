@@ -67,9 +67,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         } else {
           this.username = this.user.user_name;
         }
-        /* if ((state.payments ?? []).length > 0) {
-          this.isPayments = true;
-        }*/
       });
 
     this.auth.user$.subscribe((profile) => {
